@@ -1,141 +1,175 @@
-// src/app/register/page.tsx
-
 'use client';
 
-import React from 'react';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Loader2 } from 'lucide-react';
 
-import { useToast } from '@/hooks/use-toast';
-import { Input } from '../ui/input';
-import { Button } from '../ui/button';
+import { useAuth } from '@/context/auth-context';
+import { registerSchema, type RegisterInput } from '@/lib/validations/auth';
+import { Button } from '@/components/ui/button';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { useToast } from '../ui/use-toast';
 
-// Schema de validación con Zod
-const registerSchema = z
-  .object({
-    name: z.string().nonempty('El nombre es obligatorio.'),
-    email: z
-      .string()
-      .email('Introduce un email válido.')
-      .nonempty('El email es obligatorio.'),
-    password: z
-      .string()
-      .min(6, 'La contraseña debe tener al menos 6 caracteres.')
-      .nonempty('La contraseña es obligatoria.'),
-    confirmPassword: z
-      .string()
-      .min(6, 'La confirmación de contraseña debe tener al menos 6 caracteres.')
-      .nonempty('La confirmación de contraseña es obligatoria.'),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: 'Las contraseñas no coinciden.',
-    path: ['confirmPassword'],
-  });
-
-type RegisterFormInputs = z.infer<typeof registerSchema>;
-
-const RegisterPage: React.FC = () => {
+export default function RegisterPage() {
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  const { login } = useAuth();
   const { toast } = useToast();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<RegisterFormInputs>({
+
+  const form = useForm<RegisterInput>({
     resolver: zodResolver(registerSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+    },
   });
 
-  const onSubmit = (data: RegisterFormInputs) => {
-    // Simular registro de usuario
-    toast({
-      title: 'Registro exitoso',
-      description: `Usuario registrado: ${data.email}`,
-    });
-    console.log(data);
-  };
+  async function onSubmit(data: RegisterInput) {
+    setIsLoading(true);
+    try {
+      // Simular llamada al backend
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      // Simular respuesta exitosa
+      login({
+        id: '1',
+        name: data.name,
+        email: data.email,
+        role: 'pathologist',
+      });
+
+      toast({
+        title: '¡Registro exitoso!',
+        description: 'Tu cuenta ha sido creada correctamente.',
+      });
+
+      router.push('/dashboard');
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (error) {
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description:
+          'Hubo un error al crear tu cuenta. Por favor, intenta nuevamente.',
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="w-full max-w-md p-6 bg-white rounded-lg shadow-md"
-      >
-        <h1 className="mb-6 text-2xl font-bold text-center">Registro</h1>
-
-        <div className="mb-4">
-          <label htmlFor="name" className="block mb-1 font-medium">
-            Nombre
-          </label>
-          <Input
-            type="text"
-            id="name"
-            {...register('name')}
-            placeholder="Ingresa tu nombre"
-            className="w-full"
-          />
-          {errors.name && (
-            <p className="mt-1 text-sm text-red-500">{errors.name.message}</p>
-          )}
+    <div className="container relative min-h-[calc(100vh-4rem)] flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0">
+      <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
+        <div className="absolute inset-0 bg-primary" />
+        <div className="relative z-20 flex items-center text-lg font-medium">
+          AI Technical Test
         </div>
-
-        <div className="mb-4">
-          <label htmlFor="email" className="block mb-1 font-medium">
-            Email
-          </label>
-          <Input
-            type="email"
-            id="email"
-            {...register('email')}
-            placeholder="Ingresa tu email"
-            className="w-full"
-          />
-          {errors.email && (
-            <p className="mt-1 text-sm text-red-500">{errors.email.message}</p>
-          )}
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="password" className="block mb-1 font-medium">
-            Contraseña
-          </label>
-          <Input
-            type="password"
-            id="password"
-            {...register('password')}
-            placeholder="Ingresa tu contraseña"
-            className="w-full"
-          />
-          {errors.password && (
-            <p className="mt-1 text-sm text-red-500">
-              {errors.password.message}
+        <div className="relative z-20 mt-auto">
+          <blockquote className="space-y-2">
+            <p className="text-lg">
+              Únete a la revolución en la detección temprana del cáncer. La
+              tecnología del futuro está aquí.
             </p>
-          )}
+            <footer className="text-sm">Dr. Carlos Rodríguez</footer>
+          </blockquote>
         </div>
-
-        <div className="mb-4">
-          <label htmlFor="confirmPassword" className="block mb-1 font-medium">
-            Confirmar Contraseña
-          </label>
-          <Input
-            type="password"
-            id="confirmPassword"
-            {...register('confirmPassword')}
-            placeholder="Confirma tu contraseña"
-            className="w-full"
-          />
-          {errors.confirmPassword && (
-            <p className="mt-1 text-sm text-red-500">
-              {errors.confirmPassword.message}
+      </div>
+      <div className="lg:p-8">
+        <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
+          <div className="flex flex-col space-y-2 text-center">
+            <h1 className="text-2xl font-semibold tracking-tight">
+              Crear una cuenta
+            </h1>
+            <p className="text-sm text-muted-foreground">
+              Ingresa tus datos para registrarte
             </p>
-          )}
-        </div>
+          </div>
 
-        <Button type="submit" className="w-full">
-          Registrarse
-        </Button>
-      </form>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Nombre</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Dr. Juan Pérez" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input placeholder="doctor@hospital.com" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Contraseña</FormLabel>
+                    <FormControl>
+                      <Input type="password" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="confirmPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Confirmar Contraseña</FormLabel>
+                    <FormControl>
+                      <Input type="password" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button type="submit" className="w-full" disabled={isLoading}>
+                {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                Registrarse
+              </Button>
+            </form>
+          </Form>
+
+          <p className="px-8 text-center text-sm text-muted-foreground">
+            ¿Ya tienes una cuenta?{' '}
+            <Link
+              href="/login"
+              className="underline underline-offset-4 hover:text-primary"
+            >
+              Inicia sesión
+            </Link>
+          </p>
+        </div>
+      </div>
     </div>
   );
-};
-
-export default RegisterPage;
+}
