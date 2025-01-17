@@ -1,3 +1,44 @@
-node_modules
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Directorios de dependencias
+node_modules/
+.pnpm-debug.log
+dist/
+
+# Entornos
 .env
-dist
+
+# Directorios de Docker
+docker-compose.override.yml
+**/Dockerfile.*
+.dockerignore
+
+# Archivos del editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de construcción
+build/
+coverage/
+
+# Archivos relacionados con TypeScript
+*.tsbuildinfo
+
+# Archivos de bases de datos y datos persistentes
+*.sqlite
+*.sqlite3
+pg_data/
+
+# Contenedores y configuraciones locales
+*.pid
