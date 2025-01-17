@@ -4,6 +4,7 @@
   "main": "./dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/index.ts",
     "start": "nodemon",
     "build": "tsc",
     "lint": "eslint . --ext .ts",
@@ -14,16 +15,22 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "16.4.7",
     "express": "4.21.2",
     "pg": "8.13.1",
     "reflect-metadata": "0.2.2",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
     "typeorm": "0.3.20"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/express": "5.0.0",
     "@types/morgan": "1.9.9",
     "@types/node": "22.10.7",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.7",
     "@typescript-eslint/eslint-plugin": "7.13.1",
     "@typescript-eslint/parser": "7.13.1",
     "eslint": "8.57.0",
