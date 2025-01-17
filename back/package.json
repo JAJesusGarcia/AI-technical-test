@@ -7,6 +7,9 @@
     "dev": "nodemon src/index.ts",
     "start": "nodemon",
     "build": "tsc",
+    "docker:up": "docker compose up",
+    "docker:down": "docker compose down",
+    "docker:build": "docker compose build",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix"
   },

@@ -1,17 +1,8 @@
 version: '3.8'
 services:
-  backend:
-    build: ./backend
-    ports:
-      - '3001:3001'
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=AI-TECHNICAL-TEST
-    depends_on:
-      - db
   db:
     image: postgres:13
+    container_name: AI-TECHNICAL-TEST-db
     restart: always
     environment:
       POSTGRES_USER: postgres
@@ -21,6 +12,7 @@ services:
       - '5432:5432'
   pgadmin:
     image: dpage/pgadmin4
+    container_name: AI-TECHNICAL-TEST-pgadmin
     restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
