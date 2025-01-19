@@ -106,6 +106,57 @@ export const ChartTooltip = ({
   );
 };
 
+interface CustomTooltipProps {
+  active?: boolean;
+  payload?: {
+    color: string;
+    name: string;
+    value: number | string;
+  }[];
+  label?: string | number;
+}
+
+interface CustomizedDotProps {
+  cx?: number; // Coordenada X del punto
+  cy?: number; // Coordenada Y del punto
+  value?: number | string; // Valor del dato
+}
+
+export const CustomizedDot = ({ cx, cy }: CustomizedDotProps) => (
+  <circle
+    cx={cx}
+    cy={cy}
+    r={4}
+    fill="hsl(var(--chart-primary))" // Color principal (personalizable)
+    stroke="hsl(var(--chart-background))" // Color del borde (personalizable)
+    strokeWidth={2}
+  />
+);
+
+export const CustomTooltip = ({
+  active,
+  payload,
+  label,
+}: CustomTooltipProps) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="rounded-lg border border-gray-800 bg-gray-900 p-2 shadow-lg">
+        <p className="text-sm text-gray-200">{`${label}`}</p>
+        {payload.map((entry, index) => (
+          <p
+            key={index}
+            className="text-sm font-semibold"
+            style={{ color: entry.color }}
+          >
+            {`${entry.name}: ${entry.value}`}
+          </p>
+        ))}
+      </div>
+    );
+  }
+  return null;
+};
+
 interface ChartTooltipContentProps {
   payload?: ChartPayload[];
 }

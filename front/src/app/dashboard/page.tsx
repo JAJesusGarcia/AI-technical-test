@@ -1,3 +1,5 @@
+'use client';
+
 import { AnimatedStat } from '@/components/dashboard/animated-stat';
 import { PlatformUsage } from '@/components/dashboard/charts/platform-usage';
 import { DiagnosticDistribution } from '@/components/dashboard/charts/diagnostic-distribution';
