@@ -1,7 +1,7 @@
 import { Inter } from 'next/font/google';
+import { AuthProvider } from '@/context/auth-context';
 import { Toaster } from '@/components/ui/toaster';
 import './globals.css';
-import { AuthProvider } from '@/context/auth-context';
 import { Navbar } from '@/components/Navbar/navbar';
 import { Footer } from '@/components/Footer/footer';
 

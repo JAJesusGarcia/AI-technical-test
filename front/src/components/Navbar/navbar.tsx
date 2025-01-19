@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { useAuth } from '@/context/auth-context';
+import { Button } from '@/components/ui/button';
 
 export function Navbar() {
   const { auth, logout } = useAuth();
