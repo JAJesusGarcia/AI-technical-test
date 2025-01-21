@@ -26,14 +26,17 @@ export function Footer() {
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/" className="hover:text-primary transition-colors">
+                <Link
+                  href="/"
+                  className="hover:text-blue-500 transition-colors duration-300"
+                >
                   Home
                 </Link>
               </li>
               <li>
                 <Link
                   href="/about"
-                  className="hover:text-primary transition-colors"
+                  className="hover:text-blue-500 transition-colors duration-300"
                 >
                   About Us
                 </Link>
@@ -41,7 +44,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/articles"
-                  className="hover:text-primary transition-colors"
+                  className="hover:text-blue-500 transition-colors duration-300"
                 >
                   Articles
                 </Link>
@@ -57,7 +60,7 @@ export function Footer() {
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-primary transition-colors"
+                className="hover:text-blue-500 transition-colors duration-300"
               >
                 <Facebook className="h-6 w-6" />
               </a>
@@ -65,7 +68,7 @@ export function Footer() {
                 href="https://twitter.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-primary transition-colors"
+                className="hover:text-blue-500 transition-colors duration-300"
               >
                 <Twitter className="h-6 w-6" />
               </a>
@@ -73,7 +76,7 @@ export function Footer() {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-primary transition-colors"
+                className="hover:text-blue-500 transition-colors duration-300"
               >
                 <Linkedin className="h-6 w-6" />
               </a>
