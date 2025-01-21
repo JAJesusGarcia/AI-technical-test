@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
 
-import { useAuth } from '@/context/auth-context';
+import { useToast } from '../ui/use-toast';
 import { registerSchema, type RegisterInput } from '@/lib/validations/auth';
 import { Button } from '@/components/ui/button';
 import {
@@ -19,13 +19,13 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { useToast } from '../ui/use-toast';
 import { TestimonialsCarousel } from '../testimonials-carrusel';
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function RegisterPage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const { login } = useAuth();
   const { toast } = useToast();
 
   const form = useForm<RegisterInput>({
@@ -41,14 +41,17 @@ export default function RegisterPage() {
   async function onSubmit(data: RegisterInput) {
     setIsLoading(true);
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      login({
-        id: '1',
-        name: data.name,
-        email: data.email,
-        role: 'pathologist',
+      const response = await fetch(`${API_URL}/auth/register/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
       });
+
+      if (!response.ok) {
+        throw new Error('Error al registrar');
+      }
+
+      // const user = await response.json();
 
       toast({
         title: '¡Registro exitoso!',
@@ -56,7 +59,8 @@ export default function RegisterPage() {
       });
 
       router.push('/dashboard');
-    } catch {
+    } catch (error) {
+      console.error('Error al registrar:', error);
       toast({
         variant: 'destructive',
         title: 'Error',
@@ -70,7 +74,6 @@ export default function RegisterPage() {
 
   return (
     <div className="container grid min-h-screen grid-cols-1 lg:grid-cols-2">
-      {/* Sección del carrusel */}
       <div className="relative hidden h-full flex-col bg-muted p-10 text-white lg:flex">
         <div className="absolute inset-0 bg-primary opacity-90" />
         <div className="relative z-20">
@@ -79,7 +82,6 @@ export default function RegisterPage() {
         </div>
       </div>
 
-      {/* Sección del formulario */}
       <div className="flex flex-col items-center justify-center p-8">
         <div className="w-full max-w-md space-y-6">
           <div className="text-center">
@@ -88,7 +90,6 @@ export default function RegisterPage() {
               Ingresa tus datos para registrarte
             </p>
           </div>
-
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
@@ -149,7 +150,6 @@ export default function RegisterPage() {
               </Button>
             </form>
           </Form>
-
           <p className="text-center text-sm text-muted-foreground">
             ¿Ya tienes una cuenta?{' '}
             <Link

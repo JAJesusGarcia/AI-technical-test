@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
 
-import { useAuth } from '@/context/auth-context';
+import { useToast } from '../ui/use-toast';
 import { loginSchema, type LoginInput } from '@/lib/validations/auth';
 import { Button } from '@/components/ui/button';
 import {
@@ -19,13 +19,13 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { useToast } from '../ui/use-toast';
 import { TestimonialsCarousel } from '../testimonials-carrusel';
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const { login } = useAuth();
   const { toast } = useToast();
 
   const form = useForm<LoginInput>({
@@ -39,14 +39,17 @@ export default function LoginPage() {
   async function onSubmit(data: LoginInput) {
     setIsLoading(true);
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      login({
-        id: '1',
-        name: 'Dr. Patólogo',
-        email: data.email,
-        role: 'pathologist',
+      const response = await fetch(`${API_URL}/auth/login/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
       });
+
+      if (!response.ok) {
+        throw new Error('Credenciales inválidas');
+      }
+
+      // const user = await response.json();
 
       toast({
         title: '¡Bienvenido!',
@@ -69,7 +72,6 @@ export default function LoginPage() {
 
   return (
     <div className="container grid min-h-screen grid-cols-1 lg:grid-cols-2">
-      {/* Carrusel con testimonios */}
       <div className="relative hidden h-full flex-col bg-muted p-10 text-white lg:flex">
         <div className="absolute inset-0 bg-primary opacity-90" />
         <div className="relative z-20">
@@ -78,7 +80,6 @@ export default function LoginPage() {
         </div>
       </div>
 
-      {/* Formulario de inicio de sesión */}
       <div className="flex flex-col items-center justify-center p-8">
         <div className="w-full max-w-md space-y-6">
           <div className="text-center">
