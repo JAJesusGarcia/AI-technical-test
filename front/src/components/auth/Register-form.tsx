@@ -20,6 +20,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useToast } from '../ui/use-toast';
+import { TestimonialsCarousel } from '../testimonials-carrusel';
 
 export default function RegisterPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -40,10 +41,8 @@ export default function RegisterPage() {
   async function onSubmit(data: RegisterInput) {
     setIsLoading(true);
     try {
-      // Simular llamada al backend
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      // Simular respuesta exitosa
       login({
         id: '1',
         name: data.name,
@@ -57,8 +56,7 @@ export default function RegisterPage() {
       });
 
       router.push('/dashboard');
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (error) {
+    } catch {
       toast({
         variant: 'destructive',
         title: 'Error',
@@ -71,28 +69,21 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="container relative min-h-[calc(100vh-4rem)] flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0">
-      <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
-        <div className="absolute inset-0 bg-primary" />
-        <div className="relative z-20 flex items-center text-lg font-medium">
-          AI Technical Test
-        </div>
-        <div className="relative z-20 mt-auto">
-          <blockquote className="space-y-2">
-            <p className="text-lg">
-              Únete a la revolución en la detección temprana del cáncer. La
-              tecnología del futuro está aquí.
-            </p>
-            <footer className="text-sm">Dr. Carlos Rodríguez</footer>
-          </blockquote>
+    <div className="container grid min-h-screen grid-cols-1 lg:grid-cols-2">
+      {/* Sección del carrusel */}
+      <div className="relative hidden h-full flex-col bg-muted p-10 text-white lg:flex">
+        <div className="absolute inset-0 bg-primary opacity-90" />
+        <div className="relative z-20">
+          <h2 className="mb-6 text-lg font-medium text-white">Testimonios</h2>
+          <TestimonialsCarousel />
         </div>
       </div>
-      <div className="lg:p-8">
-        <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
-          <div className="flex flex-col space-y-2 text-center">
-            <h1 className="text-2xl font-semibold tracking-tight">
-              Crear una cuenta
-            </h1>
+
+      {/* Sección del formulario */}
+      <div className="flex flex-col items-center justify-center p-8">
+        <div className="w-full max-w-md space-y-6">
+          <div className="text-center">
+            <h1 className="text-2xl font-semibold">Crear una cuenta</h1>
             <p className="text-sm text-muted-foreground">
               Ingresa tus datos para registrarte
             </p>
@@ -159,7 +150,7 @@ export default function RegisterPage() {
             </form>
           </Form>
 
-          <p className="px-8 text-center text-sm text-muted-foreground">
+          <p className="text-center text-sm text-muted-foreground">
             ¿Ya tienes una cuenta?{' '}
             <Link
               href="/login"

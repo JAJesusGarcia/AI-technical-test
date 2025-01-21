@@ -20,6 +20,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useToast } from '../ui/use-toast';
+import { TestimonialsCarousel } from '../testimonials-carrusel';
 
 export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -38,10 +39,8 @@ export default function LoginPage() {
   async function onSubmit(data: LoginInput) {
     setIsLoading(true);
     try {
-      // Simular llamada al backend
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      // Simular respuesta exitosa
       login({
         id: '1',
         name: 'Dr. Patólogo',
@@ -55,8 +54,8 @@ export default function LoginPage() {
       });
 
       router.push('/dashboard');
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
+      console.error('Error al iniciar sesión:', error);
       toast({
         variant: 'destructive',
         title: 'Error',
@@ -69,33 +68,25 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="container relative min-h-[calc(100vh-4rem)] flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0">
-      <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
-        <div className="absolute inset-0 bg-primary" />
-        <div className="relative z-20 flex items-center text-lg font-medium">
-          AI Technical Test
-        </div>
-        <div className="relative z-20 mt-auto">
-          <blockquote className="space-y-2">
-            <p className="text-lg">
-              Esta plataforma ha revolucionado la forma en que diagnosticamos el
-              cáncer. La precisión y velocidad son incomparables.
-            </p>
-            <footer className="text-sm">Dr. María González</footer>
-          </blockquote>
+    <div className="container grid min-h-screen grid-cols-1 lg:grid-cols-2">
+      {/* Carrusel con testimonios */}
+      <div className="relative hidden h-full flex-col bg-muted p-10 text-white lg:flex">
+        <div className="absolute inset-0 bg-primary opacity-90" />
+        <div className="relative z-20">
+          <h2 className="mb-6 text-lg font-medium text-white">Testimonios</h2>
+          <TestimonialsCarousel />
         </div>
       </div>
-      <div className="lg:p-8">
-        <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
-          <div className="flex flex-col space-y-2 text-center">
-            <h1 className="text-2xl font-semibold tracking-tight">
-              Bienvenido de nuevo
-            </h1>
+
+      {/* Formulario de inicio de sesión */}
+      <div className="flex flex-col items-center justify-center p-8">
+        <div className="w-full max-w-md space-y-6">
+          <div className="text-center">
+            <h1 className="text-2xl font-semibold">Bienvenido de nuevo</h1>
             <p className="text-sm text-muted-foreground">
               Ingresa tus credenciales para acceder a tu cuenta
             </p>
           </div>
-
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
@@ -130,8 +121,7 @@ export default function LoginPage() {
               </Button>
             </form>
           </Form>
-
-          <p className="px-8 text-center text-sm text-muted-foreground">
+          <p className="text-center text-sm text-muted-foreground">
             ¿No tienes una cuenta?{' '}
             <Link
               href="/register"
