@@ -150,9 +150,9 @@ export function KI67Analysis() {
 
   return (
     <div className="space-y-8">
-      <Card>
+      <Card className="bg-white text-gray-800 shadow-lg rounded-lg">
         <CardHeader>
-          <CardTitle>Análisis KI67</CardTitle>
+          <CardTitle className="text-2xl font-bold">Análisis KI67</CardTitle>
           <CardDescription>
             Sube una imagen histológica para analizar el marcador KI67.
           </CardDescription>
@@ -168,7 +168,11 @@ export function KI67Analysis() {
           <Button type="button" variant="outline" onClick={reset}>
             Cancelar
           </Button>
-          <Button onClick={processImage} disabled={!file || isProcessing}>
+          <Button
+            onClick={processImage}
+            disabled={!file || isProcessing}
+            className="bg-blue-500 hover:bg-blue-600 text-white"
+          >
             {isProcessing && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             Procesar Imagen
           </Button>
@@ -176,9 +180,11 @@ export function KI67Analysis() {
       </Card>
 
       {result && (
-        <Card>
+        <Card className="bg-white text-gray-800 shadow-lg rounded-lg">
           <CardHeader>
-            <CardTitle>Resultados del Análisis</CardTitle>
+            <CardTitle className="text-2xl font-bold">
+              Resultados del Análisis
+            </CardTitle>
             <CardDescription>
               Revisa y ajusta los resultados del análisis según sea necesario.
             </CardDescription>
@@ -316,11 +322,19 @@ export function KI67Analysis() {
                 </div>
 
                 <div className="flex justify-end gap-2">
-                  <Button type="button" variant="destructive" onClick={reset}>
+                  <Button
+                    type="button"
+                    variant="destructive"
+                    onClick={reset}
+                    className="bg-red-500 hover:bg-red-600 text-white"
+                  >
                     <Trash className="mr-2 h-4 w-4" />
                     Eliminar
                   </Button>
-                  <Button type="submit">
+                  <Button
+                    type="submit"
+                    className="bg-green-500 hover:bg-green-600 text-white"
+                  >
                     <Save className="mr-2 h-4 w-4" />
                     Guardar Resultados
                   </Button>

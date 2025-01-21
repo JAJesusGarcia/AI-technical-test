@@ -1,13 +1,14 @@
 'use client';
 
 import React from 'react';
-import { AnimatedStat } from '@/components/dashboard/animated-stat';
-import { PlatformUsage } from '@/components/dashboard/charts/platform-usage';
-import { DiagnosticDistribution } from '@/components/dashboard/charts/diagnostic-distribution';
-import { DiagnosticTrends } from '@/components/dashboard/charts/diagnostic-trnds';
+
 import { Activity, Brain, Clock, Users, ChevronDown } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { AnimatedStat } from '@/components/(dashboard)/animated-stat';
+import { DiagnosticTrends } from '@/components/(dashboard)/charts/diagnostic-trnds';
+import { DiagnosticDistribution } from '@/components/(dashboard)/charts/diagnostic-distribution';
+import { PlatformUsage } from '@/components/(dashboard)/charts/platform-usage';
 
 interface StatData {
   title: string;
