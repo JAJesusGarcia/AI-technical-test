@@ -28,7 +28,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
 import type { AnalysisResult } from '@/types/breast-cancer';
-import { FileUpload } from '@/components/ui/file-upload';
+import { FileUpload } from '@/components/file-upload';
 
 const formSchema = z.object({
   positiveNuclei: z.number().min(0, 'Debe ser mayor o igual a 0'),
@@ -74,7 +74,6 @@ export function KI67Analysis() {
         id: Math.random().toString(36).slice(2),
         type: 'KI67',
         originalImage: URL.createObjectURL(file),
-        // En un caso real, aquí vendría la imagen procesada del backend
         processedImage: URL.createObjectURL(file),
         values: {
           positiveNuclei: 150,
@@ -93,7 +92,8 @@ export function KI67Analysis() {
         title: 'Imagen procesada',
         description: 'La imagen ha sido analizada correctamente.',
       });
-    } catch (error) {
+    } catch (err) {
+      console.error(err);
       toast({
         variant: 'destructive',
         title: 'Error',
@@ -111,7 +111,6 @@ export function KI67Analysis() {
       // Simular guardado
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      // En un caso real, aquí se enviarían los datos al backend
       const resultWithUpdatedValues = {
         ...result,
         values,
@@ -133,7 +132,8 @@ export function KI67Analysis() {
         title: 'Resultados guardados',
         description: 'Los resultados han sido guardados correctamente.',
       });
-    } catch (error) {
+    } catch (err) {
+      console.error(err);
       toast({
         variant: 'destructive',
         title: 'Error',
