@@ -38,12 +38,12 @@ const mainNav = [
 const cancerNav = [
   {
     title: 'Cáncer de Mama',
-    href: '/dashboard/breast-cancer',
+    href: '/dashboard/breast-cancer/cancer-mama',
     icon: <ImageIcon className="h-5 w-5" />,
   },
   {
     title: 'Cáncer de Próstata',
-    href: '/dashboard/prostate-cancer',
+    href: '/dashboard/breast-cancer/cancer-prostata',
     icon: <FileText className="h-5 w-5" />,
   },
 ];
