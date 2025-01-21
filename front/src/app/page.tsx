@@ -33,7 +33,7 @@ export default function Home() {
             </div>
             <div className="relative h-[400px] lg:h-[500px]">
               <Image
-                src="/placeholder.svg?height=500&width=500"
+                src="/images/home.webp"
                 alt="AI Medical Technology"
                 fill
                 className="object-cover rounded-lg shadow-xl"
