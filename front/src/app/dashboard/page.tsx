@@ -57,6 +57,7 @@ const stats: StatData[] = [
 export default function DashboardPage() {
   return (
     <div className="flex-1 space-y-6 p-4 md:p-8 pt-6 bg-gray-50">
+      {/* Header */}
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
@@ -75,7 +76,7 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* Stats Grid with Enhanced Animation */}
+      {/* Stats Grid */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat) => (
           <Card
@@ -90,7 +91,7 @@ export default function DashboardPage() {
         ))}
       </div>
 
-      {/* Enhanced Charts Grid */}
+      {/* Charts Section */}
       <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         <Card className="col-span-1 lg:col-span-2 p-6 hover:shadow-lg transition-shadow duration-200">
           <h3 className="font-semibold mb-4">Tendencia de Diagnósticos</h3>
