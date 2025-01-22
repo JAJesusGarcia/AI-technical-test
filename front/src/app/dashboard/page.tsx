@@ -1,7 +1,6 @@
 'use client';
 
-import React from 'react';
-
+import React, { useEffect } from 'react';
 import { Activity, Brain, Clock, Users, ChevronDown } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -9,6 +8,7 @@ import { AnimatedStat } from '@/components/(dashboard)/animated-stat';
 import { DiagnosticTrends } from '@/components/(dashboard)/charts/diagnostic-trnds';
 import { DiagnosticDistribution } from '@/components/(dashboard)/charts/diagnostic-distribution';
 import { PlatformUsage } from '@/components/(dashboard)/charts/platform-usage';
+import { useRouter } from 'next/navigation';
 
 interface StatData {
   title: string;
@@ -56,6 +56,16 @@ const stats: StatData[] = [
 ];
 
 export default function DashboardPage() {
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      router.push('/login'); // Redirige al login si no hay token
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="flex-1 space-y-6 p-4 md:p-8 pt-6 bg-gray-50">
       {/* Header */}
