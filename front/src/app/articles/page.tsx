@@ -21,7 +21,7 @@ const articles = [
     title: 'Avances en la Detección Temprana del Cáncer de Mama mediante IA',
     excerpt:
       'Nuevos algoritmos de inteligencia artificial están revolucionando la forma en que detectamos el cáncer de mama en etapas tempranas...',
-    image: '/placeholder.svg?height=400&width=600',
+    image: '/images/article1.webp',
     date: '2024-01-22',
     author: 'Dra. María González',
     category: 'Investigación',
@@ -32,7 +32,7 @@ const articles = [
     title: 'El Futuro de la Patología Digital',
     excerpt:
       'La transformación digital en la patología está cambiando la forma en que diagnosticamos y tratamos el cáncer...',
-    image: '/placeholder.svg?height=400&width=600',
+    image: '/images/article2.webp',
     date: '2024-01-20',
     author: 'Dr. Carlos Rodríguez',
     category: 'Tecnología',
@@ -43,7 +43,7 @@ const articles = [
     title: 'Impacto de la IA en el Diagnóstico del Cáncer de Próstata',
     excerpt:
       'Los sistemas de IA están mostrando resultados prometedores en la identificación temprana del cáncer de próstata...',
-    image: '/placeholder.svg?height=400&width=600',
+    image: '/images/article3.webp',
     date: '2024-01-18',
     author: 'Ing. Ana Martínez',
     category: 'Innovación',
@@ -76,6 +76,7 @@ export default function ArticlesPage() {
             Mantente actualizado con los últimos avances en tecnología médica y
             detección del cáncer.
           </p>
+          <br />
 
           {/* Barra de búsqueda mejorada */}
           <div className="max-w-lg mx-auto">
