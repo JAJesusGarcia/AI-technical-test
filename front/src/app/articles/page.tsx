@@ -21,7 +21,7 @@ const articles = [
     title: 'Avances en la Detección Temprana del Cáncer de Mama mediante IA',
     excerpt:
       'Nuevos algoritmos de inteligencia artificial están revolucionando la forma en que detectamos el cáncer de mama en etapas tempranas...',
-    image: '/images/article1.webp',
+    image: '/images/empresario-nuevo6.webp',
     date: '2024-01-22',
     author: 'Dra. María González',
     category: 'Investigación',
@@ -32,7 +32,7 @@ const articles = [
     title: 'El Futuro de la Patología Digital',
     excerpt:
       'La transformación digital en la patología está cambiando la forma en que diagnosticamos y tratamos el cáncer...',
-    image: '/images/article2.webp',
+    image: '/images/empresario-nuevo2.webp',
     date: '2024-01-20',
     author: 'Dr. Carlos Rodríguez',
     category: 'Tecnología',
@@ -43,7 +43,7 @@ const articles = [
     title: 'Impacto de la IA en el Diagnóstico del Cáncer de Próstata',
     excerpt:
       'Los sistemas de IA están mostrando resultados prometedores en la identificación temprana del cáncer de próstata...',
-    image: '/images/article3.webp',
+    image: '/images/empresaria-mujer.webp',
     date: '2024-01-18',
     author: 'Ing. Ana Martínez',
     category: 'Innovación',
@@ -120,7 +120,7 @@ export default function ArticlesPage() {
             >
               <div className="relative h-[240px] overflow-hidden rounded-t-lg">
                 <Image
-                  src={article.image}
+                  src="/images/article1.webp"
                   alt={article.title}
                   fill
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
