@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import type { AuthStatus, User } from '@/types/auth';
 
 type AuthContextType = {
@@ -17,11 +17,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     user: null,
   });
 
+  useEffect(() => {
+    // Check localStorage for user data on mount
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      try {
+        const user = JSON.parse(userData);
+        setAuth({
+          isAuthenticated: true,
+          user,
+        });
+      } catch (error) {
+        console.error('Error parsing user data:', error);
+        localStorage.removeItem('user');
+      }
+    }
+  }, []);
+
   const login = (user: User) => {
     setAuth({
       isAuthenticated: true,
       user,
     });
+    localStorage.setItem('user', JSON.stringify(user));
   };
 
   const logout = () => {
@@ -29,6 +47,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       isAuthenticated: false,
       user: null,
     });
+    localStorage.removeItem('user');
   };
 
   return (

@@ -1,200 +1,176 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Menu, X } from 'lucide-react';
+import { usePathname } from 'next/navigation';
+import { Menu, X, Globe } from 'lucide-react';
 import { useAuth } from '@/context/auth-context';
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+
+const publicLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About Us' },
+  { href: '/articles', label: 'Articles' },
+];
+
+const privateLinks = [
+  { href: '/dashboard', label: 'Dashboard' },
+  { href: '/breast-cancer', label: 'Cáncer de Mama' },
+  { href: '/prostate-cancer', label: 'Cáncer de Próstata' },
+];
 
 export function Navbar() {
+  const pathname = usePathname();
   const { auth, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
-  const toggleMenu = () => setIsOpen(!isOpen);
+  useEffect(() => {
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
+
+  const handleLogout = () => {
+    logout();
+    setIsOpen(false);
+  };
+
+  // Prevent hydration mismatch
+  if (!mounted) return null;
 
   return (
-    <nav className="bg-white shadow-md">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16 items-center">
-          <div className="flex">
-            <Link href="/" className="flex items-center">
-              <span className="text-xl font-bold text-blue-500">
-                AI Technical Test
-              </span>
-            </Link>
-          </div>
+    <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex h-16 items-center">
+        <div className="mr-4 hidden md:flex">
+          <Link href="/" className="mr-6 flex items-center space-x-2">
+            <span className="text-xl font-bold">AI Technical Test</span>
+          </Link>
+          <nav className="flex items-center space-x-6 text-sm font-medium">
+            {publicLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={cn(
+                  'transition-colors hover:text-foreground/80',
+                  pathname === link.href
+                    ? 'text-foreground'
+                    : 'text-foreground/60',
+                )}
+              >
+                {link.label}
+              </Link>
+            ))}
+            {auth.isAuthenticated &&
+              privateLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={cn(
+                    'transition-colors hover:text-foreground/80',
+                    pathname === link.href
+                      ? 'text-foreground'
+                      : 'text-foreground/60',
+                  )}
+                >
+                  {link.label}
+                </Link>
+              ))}
+          </nav>
+        </div>
 
-          {/* Desktop Menu */}
-          <div className="hidden sm:flex sm:items-center sm:space-x-4">
-            <Link
-              href="/"
-              className="text-gray-700 hover:text-blue-500 px-3 py-2 transition-colors duration-300"
-            >
-              Home
-            </Link>
-            <Link
-              href="/about"
-              className="text-gray-700 hover:text-blue-500 px-3 py-2 transition-colors duration-300"
-            >
-              About Us
-            </Link>
-            <Link
-              href="/articles"
-              className="text-gray-700 hover:text-blue-500 px-3 py-2 transition-colors duration-300"
-            >
-              Articles
-            </Link>
+        <button
+          className="inline-flex items-center justify-center rounded-md p-2.5 text-foreground md:hidden"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          <span className="sr-only">Open main menu</span>
+          {isOpen ? (
+            <X className="h-6 w-6" aria-hidden="true" />
+          ) : (
+            <Menu className="h-6 w-6" aria-hidden="true" />
+          )}
+        </button>
 
+        <div className="flex flex-1 items-center justify-end space-x-4">
+          <nav className="flex items-center space-x-2">
             {auth.isAuthenticated ? (
-              <>
-                <Link
-                  href="/dashboard"
-                  className="text-gray-700 hover:text-blue-500 px-3 py-2 transition-colors duration-300"
-                >
-                  Dashboard
-                </Link>
-                <Link
-                  href="/breast-cancer"
-                  className="text-gray-700 hover:text-blue-500 px-3 py-2 transition-colors duration-300"
-                >
-                  Cáncer de Mama
-                </Link>
-                <Link
-                  href="/prostate-cancer"
-                  className="text-gray-700 hover:text-blue-500 px-3 py-2 transition-colors duration-300"
-                >
-                  Cáncer de Próstata
-                </Link>
-                <Button
-                  variant="ghost"
-                  onClick={logout}
-                  className="text-gray-700 hover:text-blue-500 transition-colors duration-300"
-                >
-                  Logout
-                </Button>
-              </>
+              <Button variant="ghost" onClick={handleLogout}>
+                Logout
+              </Button>
             ) : (
               <>
                 <Link href="/login">
-                  <Button
-                    variant="ghost"
-                    className="text-gray-700 hover:text-blue-500 transition-colors duration-300"
-                  >
-                    Login
-                  </Button>
+                  <Button variant="ghost">Login</Button>
                 </Link>
                 <Link href="/register">
-                  <Button className="bg-blue-500 hover:bg-blue-600 text-white transition-colors duration-300">
-                    Register
-                  </Button>
+                  <Button>Register</Button>
                 </Link>
               </>
             )}
-
-            <Button
-              variant="ghost"
-              className="text-gray-700 hover:text-blue-500 transition-colors duration-300"
-            >
-              EN/ES
+            <Button variant="ghost" size="icon">
+              <Globe className="h-4 w-4" />
+              <span className="sr-only">Toggle language</span>
             </Button>
-          </div>
-
-          {/* Mobile menu button */}
-          <div className="sm:hidden flex items-center">
-            <button
-              onClick={toggleMenu}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-blue-500 focus:outline-none transition-colors duration-300"
-            >
-              {isOpen ? (
-                <X className="h-6 w-6" />
-              ) : (
-                <Menu className="h-6 w-6" />
-              )}
-            </button>
-          </div>
+          </nav>
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      {isOpen && (
-        <div className="sm:hidden">
-          <div className="pt-2 pb-3 space-y-1">
+      {/* Mobile menu */}
+      <div className={cn('md:hidden', isOpen ? 'block' : 'hidden')}>
+        <div className="space-y-1 px-2 pb-3 pt-2">
+          {publicLinks.map((link) => (
             <Link
-              href="/"
-              className="block px-3 py-2 text-gray-700 hover:text-blue-500 transition-colors duration-300"
-              onClick={toggleMenu}
+              key={link.href}
+              href={link.href}
+              className={cn(
+                'block rounded-md px-3 py-2 text-base font-medium transition-colors',
+                pathname === link.href
+                  ? 'bg-primary/10 text-foreground'
+                  : 'text-foreground/60 hover:bg-primary/10 hover:text-foreground',
+              )}
+              onClick={() => setIsOpen(false)}
             >
-              Home
+              {link.label}
             </Link>
-            <Link
-              href="/about"
-              className="block px-3 py-2 text-gray-700 hover:text-blue-500 transition-colors duration-300"
-              onClick={toggleMenu}
-            >
-              About Us
-            </Link>
-            <Link
-              href="/articles"
-              className="block px-3 py-2 text-gray-700 hover:text-blue-500 transition-colors duration-300"
-              onClick={toggleMenu}
-            >
-              Articles
-            </Link>
-
-            {auth.isAuthenticated ? (
-              <>
-                <Link
-                  href="/breast-cancer"
-                  className="block px-3 py-2 text-gray-700 hover:text-blue-500 transition-colors duration-300"
-                  onClick={toggleMenu}
-                >
-                  Cáncer de Mama
-                </Link>
-                <Link
-                  href="/prostate-cancer"
-                  className="block px-3 py-2 text-gray-700 hover:text-blue-500 transition-colors duration-300"
-                  onClick={toggleMenu}
-                >
-                  Cáncer de Próstata
-                </Link>
-                <Button
-                  variant="ghost"
-                  onClick={() => {
-                    logout();
-                    toggleMenu();
-                  }}
-                  className="w-full justify-start text-gray-700 hover:text-blue-500 transition-colors duration-300"
-                >
-                  Logout
-                </Button>
-              </>
-            ) : (
-              <>
-                <Link href="/login" onClick={toggleMenu}>
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-start text-gray-700 hover:text-blue-500 transition-colors duration-300"
-                  >
-                    Login
-                  </Button>
-                </Link>
-                <Link href="/register" onClick={toggleMenu}>
-                  <Button className="w-full bg-blue-500 hover:bg-blue-600 text-white transition-colors duration-300">
-                    Register
-                  </Button>
-                </Link>
-              </>
-            )}
-
+          ))}
+          {auth.isAuthenticated &&
+            privateLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={cn(
+                  'block rounded-md px-3 py-2 text-base font-medium transition-colors',
+                  pathname === link.href
+                    ? 'bg-primary/10 text-foreground'
+                    : 'text-foreground/60 hover:bg-primary/10 hover:text-foreground',
+                )}
+                onClick={() => setIsOpen(false)}
+              >
+                {link.label}
+              </Link>
+            ))}
+          {auth.isAuthenticated ? (
             <Button
               variant="ghost"
-              className="w-full justify-start text-gray-700 hover:text-blue-500 transition-colors duration-300"
+              className="w-full justify-start"
+              onClick={handleLogout}
             >
-              EN/ES
+              Logout
             </Button>
-          </div>
+          ) : (
+            <>
+              <Link href="/login" onClick={() => setIsOpen(false)}>
+                <Button variant="ghost" className="w-full justify-start">
+                  Login
+                </Button>
+              </Link>
+              <Link href="/register" onClick={() => setIsOpen(false)}>
+                <Button className="mt-2 w-full">Register</Button>
+              </Link>
+            </>
+          )}
         </div>
-      )}
+      </div>
     </nav>
   );
 }

@@ -5,77 +5,100 @@ import { KI67Analysis } from './ki67';
 
 export default function BreastCancerPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white p-8">
+    <div className="min-h-screen bg-gradient-to-r from-primary/90 via-primary/70 to-primary/50 p-8">
       <div className="mb-8 text-center">
-        <h1 className="text-4xl font-bold tracking-tight animate-pulse">
+        <h1 className="text-4xl font-bold tracking-tight text-background animate-pulse">
           Cáncer de Mama
         </h1>
-        <p className="text-lg text-gray-200 mt-2">
+        <p className="text-lg text-background/90 mt-2">
           Analiza imágenes histológicas para detectar diferentes marcadores de
           cáncer de mama.
         </p>
       </div>
 
-      <Tabs defaultValue="ki67" className="space-y-4">
-        {/* Selector de pestañas mejorado */}
-        <TabsList className="relative flex justify-center space-x-4 bg-gray-800 p-2 rounded-lg shadow-lg">
-          <div className="absolute inset-0 bg-gradient-to-r from-gray-700 via-gray-800 to-gray-900 opacity-80 rounded-lg pointer-events-none"></div>
-          <TabsTrigger
-            value="ki67"
-            className="relative z-10 px-4 py-2 rounded-lg font-semibold text-sm text-white transition-all duration-300 ease-in-out hover:bg-gray-700 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-          >
-            KI67
-          </TabsTrigger>
-          <TabsTrigger
-            value="her2"
-            className="relative z-10 px-4 py-2 rounded-lg font-semibold text-sm text-white transition-all duration-300 ease-in-out hover:bg-gray-700 focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-          >
-            HER2
-          </TabsTrigger>
-          <TabsTrigger
-            value="estrogen"
-            className="relative z-10 px-4 py-2 rounded-lg font-semibold text-sm text-white transition-all duration-300 ease-in-out hover:bg-gray-700 focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
-          >
-            Estrógeno
-          </TabsTrigger>
-          <TabsTrigger
-            value="progesterone"
-            className="relative z-10 px-4 py-2 rounded-lg font-semibold text-sm text-white transition-all duration-300 ease-in-out hover:bg-gray-700 focus:ring-2 focus:ring-offset-2 focus:ring-pink-500"
-          >
-            Progesterona
-          </TabsTrigger>
-        </TabsList>
-
-        {/* Contenido para KI67 */}
-        <TabsContent value="ki67" className="space-y-4">
-          <KI67Analysis />
-        </TabsContent>
-
-        {/* Contenido para HER2 */}
-        <TabsContent value="her2">
-          <div className="flex h-[400px] items-center justify-center border-2 border-dashed rounded-lg bg-white text-gray-800">
-            <p className="text-muted-foreground">Próximamente: Análisis HER2</p>
+      <div className="container max-w-5xl mx-auto">
+        <Tabs defaultValue="ki67" className="space-y-8">
+          <div className="relative flex justify-center">
+            <TabsList className="relative inline-flex bg-background/10 backdrop-blur-sm p-1 rounded-lg shadow-lg">
+              <TabsTrigger
+                value="ki67"
+                className="data-[state=active]:bg-background data-[state=active]:text-primary relative px-6 py-2 rounded-md font-medium text-sm text-background transition-all"
+              >
+                KI67
+              </TabsTrigger>
+              <TabsTrigger
+                value="her2"
+                className="data-[state=active]:bg-background data-[state=active]:text-primary relative px-6 py-2 rounded-md font-medium text-sm text-background transition-all"
+              >
+                HER2
+              </TabsTrigger>
+              <TabsTrigger
+                value="estrogen"
+                className="data-[state=active]:bg-background data-[state=active]:text-primary relative px-6 py-2 rounded-md font-medium text-sm text-background transition-all"
+              >
+                Estrógeno
+              </TabsTrigger>
+              <TabsTrigger
+                value="progesterone"
+                className="data-[state=active]:bg-background data-[state=active]:text-primary relative px-6 py-2 rounded-md font-medium text-sm text-background transition-all"
+              >
+                Progesterona
+              </TabsTrigger>
+            </TabsList>
           </div>
-        </TabsContent>
 
-        {/* Contenido para Estrógeno */}
-        <TabsContent value="estrogen">
-          <div className="flex h-[400px] items-center justify-center border-2 border-dashed rounded-lg bg-white text-gray-800">
-            <p className="text-muted-foreground">
-              Próximamente: Análisis de Estrógeno
-            </p>
-          </div>
-        </TabsContent>
+          <TabsContent value="ki67" className="space-y-4">
+            <div className="bg-background rounded-lg shadow-lg p-6">
+              <KI67Analysis />
+            </div>
+          </TabsContent>
 
-        {/* Contenido para Progesterona */}
-        <TabsContent value="progesterone">
-          <div className="flex h-[400px] items-center justify-center border-2 border-dashed rounded-lg bg-white text-gray-800">
-            <p className="text-muted-foreground">
-              Próximamente: Análisis de Progesterona
-            </p>
-          </div>
-        </TabsContent>
-      </Tabs>
+          <TabsContent value="her2">
+            <div className="bg-background rounded-lg shadow-lg p-6">
+              <div className="flex h-[400px] items-center justify-center border-2 border-dashed border-muted rounded-lg">
+                <div className="text-center space-y-2">
+                  <p className="text-2xl font-semibold text-muted-foreground">
+                    Próximamente
+                  </p>
+                  <p className="text-muted-foreground">
+                    El análisis HER2 estará disponible pronto
+                  </p>
+                </div>
+              </div>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="estrogen">
+            <div className="bg-background rounded-lg shadow-lg p-6">
+              <div className="flex h-[400px] items-center justify-center border-2 border-dashed border-muted rounded-lg">
+                <div className="text-center space-y-2">
+                  <p className="text-2xl font-semibold text-muted-foreground">
+                    Próximamente
+                  </p>
+                  <p className="text-muted-foreground">
+                    El análisis de Estrógeno estará disponible pronto
+                  </p>
+                </div>
+              </div>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="progesterone">
+            <div className="bg-background rounded-lg shadow-lg p-6">
+              <div className="flex h-[400px] items-center justify-center border-2 border-dashed border-muted rounded-lg">
+                <div className="text-center space-y-2">
+                  <p className="text-2xl font-semibold text-muted-foreground">
+                    Próximamente
+                  </p>
+                  <p className="text-muted-foreground">
+                    El análisis de Progesterona estará disponible pronto
+                  </p>
+                </div>
+              </div>
+            </div>
+          </TabsContent>
+        </Tabs>
+      </div>
     </div>
   );
 }
