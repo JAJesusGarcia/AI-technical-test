@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, ChevronDown } from 'lucide-react';
-import { useAuth } from '@/context/auth-context';
+import { AuthContext } from '@/context/auth-context'; // Contexto de autenticación
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import {
@@ -64,7 +64,7 @@ ListItem.displayName = 'ListItem';
 
 export function Navbar() {
   const pathname = usePathname();
-  const { auth, logout } = useAuth();
+  const { user, logout } = useContext(AuthContext); // Usar el contexto de autenticación
   const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
@@ -75,7 +75,7 @@ export function Navbar() {
   }, []);
 
   const handleLogout = () => {
-    logout();
+    logout(); // Cerrar sesión desde el contexto
     setIsOpen(false);
   };
 
@@ -138,7 +138,7 @@ export function Navbar() {
                     </Link>
                   </NavigationMenuItem>
                 ))}
-              {auth.isAuthenticated &&
+              {user &&
                 privateLinks.map((link) => (
                   <NavigationMenuItem key={link.href}>
                     <Link href={link.href} legacyBehavior passHref>
@@ -156,7 +156,7 @@ export function Navbar() {
 
         {/* Desktop Auth Buttons */}
         <div className="hidden items-center space-x-4 md:flex">
-          {auth.isAuthenticated ? (
+          {user ? (
             <AlertDialog>
               <AlertDialogTrigger asChild>
                 <Button variant="outline" size="sm">
@@ -263,7 +263,7 @@ export function Navbar() {
                     )}
                   </React.Fragment>
                 ))}
-                {auth.isAuthenticated &&
+                {user &&
                   privateLinks.map((link) => (
                     <Link
                       key={link.href}
@@ -281,7 +281,7 @@ export function Navbar() {
                   ))}
               </div>
               <div className="mt-8 pt-8 border-t">
-                {auth.isAuthenticated ? (
+                {user ? (
                   <Button
                     variant="outline"
                     className="w-full text-lg"

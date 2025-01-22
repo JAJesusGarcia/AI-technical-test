@@ -1,12 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
-
 import { useToast } from '../ui/use-toast';
 import { loginSchema, type LoginInput } from '@/lib/validations/auth';
 import { Button } from '@/components/ui/button';
@@ -20,6 +19,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { TestimonialsCarousel } from '../testimonials-carrusel';
+import { AuthContext } from '@/context/auth-context';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -27,6 +27,7 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
+  const { setUser } = useContext(AuthContext);
 
   const form = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
@@ -49,7 +50,16 @@ export default function LoginPage() {
         throw new Error('Credenciales inválidas');
       }
 
-      // const user = await response.json();
+      const { token } = await response.json();
+
+      // Guardar el token en localStorage
+      localStorage.setItem(
+        'user',
+        JSON.stringify({ token, email: data.email }),
+      );
+
+      // Actualizar el contexto de autenticación
+      setUser({ token, email: data.email });
 
       toast({
         title: '¡Bienvenido!',

@@ -12,10 +12,9 @@ import {
   LogOut,
   Menu,
 } from 'lucide-react';
-import React, { useState } from 'react';
-
+import React, { useState, useContext } from 'react';
+import { AuthContext } from '@/context/auth-context';
 import { Button } from '@/components/ui/button';
-import { useAuth } from '@/context/auth-context';
 
 const mainNav = [
   {
@@ -50,8 +49,10 @@ const cancerNav = [
 
 export function Sidebar() {
   const pathname = usePathname();
-  const { auth, logout } = useAuth();
   const [isCollapsed, setIsCollapsed] = useState(false);
+
+  // Obtener datos del usuario y la función de logout desde AuthContext
+  const { user, logout } = useContext(AuthContext);
 
   const toggleSidebar = () => setIsCollapsed(!isCollapsed);
 
@@ -121,16 +122,16 @@ export function Sidebar() {
               </div>
               <div className="grid gap-1 overflow-hidden">
                 <div className="font-medium leading-none">
-                  {auth.user?.name}
+                  {user?.email || 'Usuario'}
                 </div>
-                <div className="text-xs text-gray-200">{auth.user?.email}</div>
+                <div className="text-xs text-gray-200">{user?.email}</div>
               </div>
             </div>
             <Button
               variant="ghost"
               size="icon"
               className="h-8 w-8"
-              onClick={() => logout()}
+              onClick={logout} // Conectar el botón al logout
             >
               <LogOut className="h-4 w-4" />
               <span className="sr-only">Cerrar sesión</span>
