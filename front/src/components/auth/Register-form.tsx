@@ -58,7 +58,7 @@ export default function RegisterPage() {
         description: 'Tu cuenta ha sido creada correctamente.',
       });
 
-      router.push('/dashboard');
+      router.push('/login');
     } catch (error) {
       console.error('Error al registrar:', error);
       toast({

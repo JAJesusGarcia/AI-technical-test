@@ -16,15 +16,24 @@ const router = Router();
  *           schema:
  *             type: object
  *             properties:
- *               username:
+ *               email:
  *                 type: string
+ *                 description: The username of the user
  *               password:
  *                 type: string
+ *                 description: The password of the user
+ *               name:
+ *                 type: string
+ *                 description: The full name of the user
+ *             required:
+ *               - username
+ *               - password
+ *               - name
  *     responses:
  *       201:
  *         description: User registered successfully
  *       400:
- *         description: Username already exists
+ *         description: Username already exists or missing required fields
  */
 router.post('/register', registerUser);
 
