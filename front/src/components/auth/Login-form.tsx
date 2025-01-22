@@ -49,7 +49,10 @@ export default function LoginPage() {
         throw new Error('Credenciales inválidas');
       }
 
-      // const user = await response.json();
+      const user = await response.json();
+
+      // Ejemplo: guardar el token en localStorage
+      localStorage.setItem('token', user.token);
 
       toast({
         title: '¡Bienvenido!',
