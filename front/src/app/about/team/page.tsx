@@ -23,7 +23,7 @@ export default function TeamPage() {
       image: '/images/av_carranza.webp',
       specialties: ['Desarrollo de Negocios', 'Gestión de Operaciones'],
       bio: 'Octavio aporta más de 20 años de experiencia en desarrollo de negocios y gestión de operaciones. Su liderazgo ha sido fundamental en el crecimiento y expansión de nuestra empresa.',
-      linkedin: '#',
+      linkedin: 'https://www.linkedin.com/in/octaviocarranza/',
       twitter: '#',
     },
     {
@@ -36,7 +36,7 @@ export default function TeamPage() {
         'International Business',
       ],
       bio: 'Pedro es un reconocido académico y emprendedor. Su experiencia en negocios internacionales y su visión innovadora han sido cruciales para establecer nuestra presencia global.',
-      linkedin: '#',
+      linkedin: 'https://www.linkedin.com/in/pedro-nueno-b595841a8/',
       twitter: '#',
     },
     {
@@ -49,22 +49,27 @@ export default function TeamPage() {
         'Former CEO at Deep Vision AI',
       ],
       bio: 'Agustin es un pionero en el campo de la IA aplicada a la visión por computadora. Su experiencia técnica y liderazgo han sido fundamentales en el desarrollo de nuestras soluciones de IA para la detección del cáncer.',
-      linkedin: '#',
+      linkedin: 'https://www.linkedin.com/in/agustincaverzasi/',
       twitter: '#',
     },
     {
-      name: 'Dra. María Rodríguez',
-      role: 'Chief Medical Officer',
-      image: '/api/placeholder/400/500',
-      specialties: ['Oncología', 'Investigación Clínica'],
-      bio: 'La Dra. Rodríguez aporta una valiosa perspectiva médica a nuestro equipo. Su experiencia en oncología y investigación clínica asegura que nuestras soluciones de IA se alineen con las necesidades reales de los profesionales de la salud.',
-      linkedin: '#',
+      name: 'Jesús García',
+      role: 'Full Stack Developer',
+      image: '/images/myPhoto5.webp',
+      specialties: [
+        'Desarrollo de Software',
+        'Metodologias Agiles',
+        'Next.js',
+        'TypeScript',
+      ],
+      bio: 'Mi compromiso es crear experiencias de usuario intuitivas y accesibles, utilizando tecnologías punteras como Next.js, React y Node.js, y estoy en la búsqueda de oportunidades que me permitan seguir creciendo profesionalmente mientras continúo con mis estudios universitarios.',
+      linkedin: 'https://www.linkedin.com/in/jesusjagarcia/',
       twitter: '#',
     },
     {
       name: 'Ing. Carlos Mendoza',
       role: 'Chief Technology Officer',
-      image: '/api/placeholder/400/500',
+      image: '/images/empresario-nuevo1.webp',
       specialties: ['Inteligencia Artificial', 'Aprendizaje Automático'],
       bio: 'Carlos lidera nuestro equipo de desarrollo tecnológico. Su experiencia en IA y aprendizaje automático impulsa la innovación continua en nuestras soluciones de detección de cáncer.',
       linkedin: '#',
@@ -73,7 +78,7 @@ export default function TeamPage() {
     {
       name: 'Lic. Ana Gómez',
       role: 'Chief Operating Officer',
-      image: '/api/placeholder/400/500',
+      image: '/images/empresario3.webp',
       specialties: ['Gestión de Operaciones', 'Estrategia Empresarial'],
       bio: 'Ana supervisa las operaciones diarias de nuestra empresa. Su experiencia en gestión y estrategia empresarial asegura que nuestros procesos sean eficientes y efectivos.',
       linkedin: '#',
@@ -84,7 +89,7 @@ export default function TeamPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-background via-background/80 to-muted/20">
       {/* Hero Section */}
-      <div className="relative py-24 container mx-auto px-4">
+      <div className="relative py-24 container mx-auto px-4 inset-0 bg-gradient-to-br from-blue-600/90 via-purple-600/90 to-pink-600/90">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute inset-y-0 w-96 bg-primary/5 blur-3xl -left-48 transform rotate-12" />
           <div className="absolute inset-y-0 w-96 bg-primary/5 blur-3xl -right-48 transform -rotate-12" />
@@ -92,12 +97,12 @@ export default function TeamPage() {
 
         <div className="relative text-center space-y-6 max-w-4xl mx-auto">
           <div className="w-16 h-16 mx-auto mb-6 bg-primary/10 rounded-2xl flex items-center justify-center">
-            <Users className="h-8 w-8 text-primary" />
+            <Users className="h-8 w-8 text-purple-800" />
           </div>
-          <h1 className="text-5xl md:text-6xl font-bold tracking-tight bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight animate-fade-in">
             Nuestro Equipo
           </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">
+          <p className="text-xl md:text-2xl  text-gray-100">
             Conozca a los expertos detrás de nuestra tecnología revolucionaria
             de detección de cáncer.
           </p>
