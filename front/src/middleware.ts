@@ -1,30 +1,26 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-// Rutas que requieren autenticación
-const protectedRoutes = ['/dashboard', '/breast-cancer', '/prostate-cancer'];
-
-// Rutas públicas cuando el usuario está autenticado
-const authRoutes = ['/login', '/register'];
-
 export function middleware(request: NextRequest) {
-  const currentUser = request.cookies.get('user')?.value;
+  const protectedRoutes = ['/dashboard', '/breast-cancer', '/prostate-cancer'];
+  const publicRoutes = ['/login', '/register'];
 
-  if (
-    !currentUser &&
-    protectedRoutes.some((route) => request.nextUrl.pathname.startsWith(route))
-  ) {
-    request.cookies.delete('user');
-    const response = NextResponse.redirect(new URL('/login', request.url));
-    response.cookies.delete('user');
+  const isAuthRoute = publicRoutes.some((route) =>
+    request.nextUrl.pathname.startsWith(route),
+  );
 
-    return response;
+  const isProtectedRoute = protectedRoutes.some((route) =>
+    request.nextUrl.pathname.startsWith(route),
+  );
+
+  // Para mantener compatibilidad, verifica solo la existencia de un token en cookies
+  const authToken = request.cookies.get('authToken')?.value;
+
+  if (!authToken && isProtectedRoute) {
+    return NextResponse.redirect(new URL('/login', request.url));
   }
 
-  if (
-    currentUser &&
-    authRoutes.some((route) => request.nextUrl.pathname.startsWith(route))
-  ) {
+  if (authToken && isAuthRoute) {
     return NextResponse.redirect(new URL('/dashboard', request.url));
   }
 
@@ -33,10 +29,10 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    // '/dashboard/:path*',
-    // '/dashboard/breast-cancer/:path*',
-    // '/dashboard/prostate-cancer/:path*',
+    '/dashboard/:path*',
     '/login',
     '/register',
+    '/breast-cancer',
+    '/prostate-cancer',
   ],
 };
