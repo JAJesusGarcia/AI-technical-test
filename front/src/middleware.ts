@@ -33,9 +33,9 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/dashboard/:path*',
-    '/dashboard/breast-cancer/:path*',
-    '/dashboard/prostate-cancer/:path*',
+    // '/dashboard/:path*',
+    // '/dashboard/breast-cancer/:path*',
+    // '/dashboard/prostate-cancer/:path*',
     '/login',
     '/register',
   ],
