@@ -7,7 +7,7 @@ export default function BreastCancerPage() {
   return (
     <div className="min-h-screen bg-gray-200">
       <div className="mb-8 text-center">
-        <h1 className="text-4xl pt-8 font-bold text-gray-800">
+        <h1 className="text-4xl pt-8 font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-pink-500">
           Cáncer de Mama
         </h1>
         <p className="text-lg text-gray-600 mt-2">
