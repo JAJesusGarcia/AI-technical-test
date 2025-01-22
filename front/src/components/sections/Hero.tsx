@@ -43,7 +43,7 @@ export function Hero() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="text-white border-white hover:bg-white/10"
+                  className="text-purple border-white hover:bg-white/10"
                 >
                   Saber más
                 </Button>
