@@ -94,17 +94,17 @@ export default function DashboardPage() {
 
       {/* Charts Section */}
       <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        <Card className="col-span-1 lg:col-span-2 p-6 hover:shadow-lg transition-shadow duration-200">
+        <Card className="col-span-1 lg:col-span-2 p-3 hover:shadow-lg transition-shadow duration-200 bg-gray-50">
           {/* <h3 className="font-semibold mb-4">Tendencia de Diagnósticos</h3> */}
           <DiagnosticTrends />
         </Card>
 
-        <Card className="p-6 hover:shadow-lg transition-shadow duration-200">
+        <Card className=" hover:shadow-lg transition-shadow p-3 bg-gray-50 duration-200">
           {/* <h3 className="font-semibold mb-4">Distribución de Diagnósticos</h3> */}
           <DiagnosticDistribution />
         </Card>
 
-        <Card className="col-span-1 lg:col-span-3 p-6 hover:shadow-lg transition-shadow duration-200">
+        <Card className="col-span-1 p-3 lg:col-span-3  hover:shadow-lg transition-shadow bg-gray-50 duration-200">
           {/* <h3 className="font-semibold mb-4">Uso de la Plataforma</h3> */}
           <PlatformUsage />
         </Card>
