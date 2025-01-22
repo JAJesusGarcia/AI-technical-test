@@ -5,18 +5,18 @@ import { KI67Analysis } from './ki67';
 
 export default function BreastCancerPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white p-8">
+    <div className="min-h-screen bg-gray-200">
       <div className="mb-8 text-center">
-        <h1 className="text-4xl font-bold tracking-tight animate-pulse">
+        <h1 className="text-4xl pt-8 font-bold text-gray-800">
           Cáncer de Mama
         </h1>
-        <p className="text-lg text-gray-200 mt-2">
+        <p className="text-lg text-gray-600 mt-2">
           Analiza imágenes histológicas para detectar diferentes marcadores de
           cáncer de mama.
         </p>
       </div>
 
-      <Tabs defaultValue="ki67" className="space-y-4">
+      <Tabs defaultValue="ki67" className="space-y-4 m-10">
         {/* Selector de pestañas mejorado */}
         <TabsList className="relative flex justify-center space-x-4 bg-gray-800 p-2 rounded-lg shadow-lg">
           <div className="absolute inset-0 bg-gradient-to-r from-gray-700 via-gray-800 to-gray-900 opacity-80 rounded-lg pointer-events-none"></div>
