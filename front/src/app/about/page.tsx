@@ -47,7 +47,7 @@ export default function AboutPage() {
               title: 'Precisión Avanzada',
               description:
                 'Algoritmos de IA entrenados con millones de muestras histológicas para garantizar resultados precisos.',
-              image: '/placeholder.svg?height=48&width=48',
+              image: '/images/home2.webp',
             },
             {
               title: 'Rapidez',
@@ -85,22 +85,30 @@ export default function AboutPage() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
             {
-              name: 'Dra. María González',
-              role: 'Directora Médica',
-              image: '/placeholder.svg?height=300&width=300',
-              specialties: ['Oncología', 'Patología Digital'],
+              name: 'Octavio Carranza',
+              role: 'Development business leader and management operations',
+              image: '/images/av_carranza.webp',
+              specialties: ['Desarrollo de Negocios', 'Gestión de Operaciones'],
             },
             {
-              name: 'Dr. Carlos Rodríguez',
-              role: 'Jefe de Investigación',
-              image: '/placeholder.svg?height=300&width=300',
-              specialties: ['Investigación Clínica', 'IA en Medicina'],
+              name: 'Pedro Nueno',
+              role: 'Founder of the center of entrepreneurship from IESE BS.',
+              image: '/images/Nunez.webp',
+              specialties: [
+                'Professor',
+                'Honorary President',
+                'International Business',
+              ],
             },
             {
-              name: 'Ing. Ana Martínez',
-              role: 'Líder de Desarrollo IA',
-              image: '/placeholder.svg?height=300&width=300',
-              specialties: ['Machine Learning', 'Análisis de Imágenes'],
+              name: 'Agustin Caverzasi',
+              role: 'Co-founder and leader of Deep Vision AI.',
+              image: '/images7av_caverzasi.webp',
+              specialties: [
+                'CEO at Anyone AI',
+                'Former President AI at IntelliSite',
+                'Former CEO at Deep Vision AI',
+              ],
             },
           ].map((member, index) => (
             <Card key={index} className="overflow-hidden">

@@ -1,17 +1,17 @@
-import React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+import {
+  Brain,
+  Search,
+  LineChart,
+  Activity,
+  Trophy,
+  Users,
+  Clock,
+  Shield,
+} from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { Card } from '@/components/ui/card';
-import { Brain, Search, LineChart, Activity, LucideIcon } from 'lucide-react';
-
-const NeuralNetworkBackground = () => {
-  return (
-    <div className="absolute inset-0 overflow-hidden opacity-10">
-      <div className="absolute w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-purple-300/30 via-transparent to-transparent animate-pulse" />
-    </div>
-  );
-};
+import { Button } from '@/components/ui/button';
+import { Hero } from '@/components/sections/Hero';
 
 interface ProcessStepProps {
   icon: LucideIcon;
@@ -36,63 +36,32 @@ const ProcessStep = ({ icon: Icon, title, description }: ProcessStepProps) => {
   );
 };
 
+interface StatProps {
+  icon: LucideIcon;
+  value: string;
+  label: string;
+}
+
+const Stat = ({ icon: Icon, value, label }: StatProps) => {
+  return (
+    <div className="flex flex-col items-center space-y-2 p-6 text-center">
+      <Icon size={32} className="text-primary" />
+      <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
+        {value}
+      </div>
+      <div className="text-muted-foreground">{label}</div>
+    </div>
+  );
+};
+
 export default function Home() {
   return (
     <div className="relative min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center">
-        <NeuralNetworkBackground />
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/90 via-purple-600/90 to-pink-600/90" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight animate-fade-in">
-                Detección temprana de{' '}
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-200 to-pink-200">
-                  cáncer con IA
-                </span>
-              </h1>
-              <p className="text-xl text-gray-100">
-                Nuestra tecnología permite que la detección de cáncer sea más
-                rápida y precisa. El futuro de la patología es ahora.
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <Link href="/register">
-                  <Button
-                    size="lg"
-                    className="bg-white text-blue-600 hover:bg-blue-50 hover:scale-105 transform transition-all duration-200"
-                  >
-                    Comenzar ahora
-                  </Button>
-                </Link>
-                <Link href="/about">
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="text-white border-white hover:bg-white/10"
-                  >
-                    Saber más
-                  </Button>
-                </Link>
-              </div>
-            </div>
-            <div className="relative h-[500px] rounded-2xl overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 animate-pulse" />
-              <Image
-                src="/images/home.webp"
-                alt="AI Medical Technology"
-                fill
-                className="object-cover rounded-2xl transform hover:scale-105 transition-transform duration-500"
-                priority
-              />
-            </div>
-          </div>
-        </div>
-      </section>
+      <Hero />
 
       {/* How Our AI Works Section */}
       <section className="py-20 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
               Cómo Funciona Nuestra IA
@@ -124,6 +93,37 @@ export default function Home() {
               title="Resultados"
               description="Informes detallados con visualizaciones claras y recomendaciones"
             />
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="py-20 bg-gradient-to-b from-gray-50/50 to-white/50">
+        <div className="container mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
+              Nuestro Impacto en Números
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Resultados que demuestran nuestro compromiso con la excelencia en
+              el diagnóstico médico
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <Stat icon={Users} value="10,000+" label="Pacientes Atendidos" />
+            <Stat icon={Trophy} value="99.8%" label="Precisión Diagnóstica" />
+            <Stat icon={Clock} value="<24h" label="Tiempo de Respuesta" />
+            <Stat icon={Shield} value="100%" label="Datos Protegidos" />
+          </div>
+
+          <div className="text-center mt-12">
+            <Button
+              size="lg"
+              className="bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:opacity-90"
+            >
+              Conoce Más Sobre Nuestros Resultados
+            </Button>
           </div>
         </div>
       </section>
