@@ -6,9 +6,9 @@ import { Activity, Brain, Clock, Users, ChevronDown } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { AnimatedStat } from '@/components/(dashboard)/animated-stat';
-import { DiagnosticTrends } from '@/components/(dashboard)/charts/diagnostic-trnds';
-import { DiagnosticDistribution } from '@/components/(dashboard)/charts/diagnostic-distribution';
-import { PlatformUsage } from '@/components/(dashboard)/charts/platform-usage';
+import DiagnosticTrends from '@/components/(dashboard)/charts/diagnostic-trnds';
+import DiagnosticDistribution from '@/components/(dashboard)/charts/diagnostic-distribution';
+import PlatformUsage from '@/components/(dashboard)/charts/platform-usage';
 
 interface StatData {
   title: string;
@@ -95,17 +95,17 @@ export default function DashboardPage() {
       {/* Charts Section */}
       <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         <Card className="col-span-1 lg:col-span-2 p-6 hover:shadow-lg transition-shadow duration-200">
-          <h3 className="font-semibold mb-4">Tendencia de Diagnósticos</h3>
+          {/* <h3 className="font-semibold mb-4">Tendencia de Diagnósticos</h3> */}
           <DiagnosticTrends />
         </Card>
 
         <Card className="p-6 hover:shadow-lg transition-shadow duration-200">
-          <h3 className="font-semibold mb-4">Distribución de Diagnósticos</h3>
+          {/* <h3 className="font-semibold mb-4">Distribución de Diagnósticos</h3> */}
           <DiagnosticDistribution />
         </Card>
 
         <Card className="col-span-1 lg:col-span-3 p-6 hover:shadow-lg transition-shadow duration-200">
-          <h3 className="font-semibold mb-4">Uso de la Plataforma</h3>
+          {/* <h3 className="font-semibold mb-4">Uso de la Plataforma</h3> */}
           <PlatformUsage />
         </Card>
       </div>

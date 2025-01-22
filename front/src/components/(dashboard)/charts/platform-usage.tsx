@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   AreaChart,
@@ -9,10 +10,31 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  TooltipProps,
 } from 'recharts';
-import { chartConfig, CustomTooltip } from '@/components/ui/chart';
+import {
+  NameType,
+  ValueType,
+} from 'recharts/types/component/DefaultTooltipContent';
 
-const data = [
+// Interfaces
+interface DataPoint {
+  date: string;
+  desktop: number;
+  mobile: number;
+}
+
+interface ChartConfig {
+  grid: {
+    stroke: string;
+  };
+  axis: {
+    stroke: string;
+    text: string;
+  };
+}
+
+const data: DataPoint[] = [
   { date: 'Abr 5', desktop: 2341, mobile: 2841 },
   { date: 'Abr 11', desktop: 2583, mobile: 2941 },
   { date: 'Abr 17', desktop: 2483, mobile: 2842 },
@@ -27,11 +49,51 @@ const data = [
   { date: 'Jun 10', desktop: 2723, mobile: 2960 },
 ];
 
-export function PlatformUsage() {
+const chartConfig: ChartConfig = {
+  grid: {
+    stroke: '#e2e8f0',
+  },
+  axis: {
+    stroke: '#64748b',
+    text: '#334155',
+  },
+};
+
+// Tipo para los datos del tooltip
+// type TooltipPayload = {
+//   value: number;
+//   name: string;
+//   color: string;
+// };
+
+const CustomTooltip = ({
+  active,
+  payload,
+  label,
+}: TooltipProps<ValueType, NameType>) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="bg-white p-4 border border-gray-200 rounded-lg shadow-sm">
+        <p className="text-gray-600 mb-2">{label}</p>
+        {payload.map((entry, index) => (
+          <p key={index} className="text-sm" style={{ color: entry.color }}>
+            {entry.name}: {entry.value?.toLocaleString()}
+          </p>
+        ))}
+      </div>
+    );
+  }
+  return null;
+};
+
+const PlatformUsage: React.FC = () => {
+  const totalDesktop = data.reduce((sum, item) => sum + item.desktop, 0);
+  const totalMobile = data.reduce((sum, item) => sum + item.mobile, 0);
+
   return (
-    <Card className="col-span-2 bg-gray-900">
+    <Card className="col-span-2 bg-white">
       <CardHeader>
-        <CardTitle className="text-gray-100">Uso por Plataforma</CardTitle>
+        <CardTitle className="text-gray-900">Uso por Plataforma</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="h-[300px]">
@@ -52,16 +114,16 @@ export function PlatformUsage() {
               </defs>
               <CartesianGrid
                 strokeDasharray="3 3"
-                stroke={chartConfig.theme.grid.line.stroke}
+                stroke={chartConfig.grid.stroke}
               />
               <XAxis
                 dataKey="date"
-                stroke={chartConfig.theme.axis.domain.line.stroke}
-                tick={{ fill: chartConfig.theme.axis.ticks.text.fill }}
+                stroke={chartConfig.axis.stroke}
+                tick={{ fill: chartConfig.axis.text }}
               />
               <YAxis
-                stroke={chartConfig.theme.axis.domain.line.stroke}
-                tick={{ fill: chartConfig.theme.axis.ticks.text.fill }}
+                stroke={chartConfig.axis.stroke}
+                tick={{ fill: chartConfig.axis.text }}
               />
               <Tooltip content={<CustomTooltip />} />
               <Area
@@ -84,16 +146,22 @@ export function PlatformUsage() {
           </ResponsiveContainer>
         </div>
         <div className="mt-4 grid grid-cols-2 gap-4">
-          <div className="flex items-center justify-between rounded-md border border-gray-800 p-3">
-            <div className="text-gray-100">Desktop</div>
-            <div className="text-xl font-bold text-pink-500">23,717</div>
+          <div className="flex items-center justify-between rounded-md border border-gray-200 bg-white p-3">
+            <div className="text-gray-600">Desktop</div>
+            <div className="text-xl font-bold text-pink-500">
+              {totalDesktop.toLocaleString()}
+            </div>
           </div>
-          <div className="flex items-center justify-between rounded-md border border-gray-800 p-3">
-            <div className="text-gray-100">Mobile</div>
-            <div className="text-xl font-bold text-blue-500">25,910</div>
+          <div className="flex items-center justify-between rounded-md border border-gray-200 bg-white p-3">
+            <div className="text-gray-600">Mobile</div>
+            <div className="text-xl font-bold text-blue-500">
+              {totalMobile.toLocaleString()}
+            </div>
           </div>
         </div>
       </CardContent>
     </Card>
   );
-}
+};
+
+export default PlatformUsage;

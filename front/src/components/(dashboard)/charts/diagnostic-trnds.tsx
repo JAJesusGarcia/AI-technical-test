@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   LineChart,
@@ -9,14 +10,37 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  TooltipProps,
 } from 'recharts';
 import {
-  chartConfig,
-  CustomTooltip,
-  CustomizedDot,
-} from '@/components/ui/chart';
+  NameType,
+  ValueType,
+} from 'recharts/types/component/DefaultTooltipContent';
 
-const data = [
+// Interfaces
+interface DataPoint {
+  date: string;
+  mama: number;
+  prostata: number;
+}
+
+interface ChartConfig {
+  grid: {
+    stroke: string;
+  };
+  axis: {
+    stroke: string;
+    text: string;
+  };
+}
+
+interface CustomDotProps {
+  cx: number;
+  cy: number;
+  stroke: string;
+}
+
+const data: DataPoint[] = [
   { date: 'Abr 5', mama: 45, prostata: 35 },
   { date: 'Abr 11', mama: 52, prostata: 38 },
   { date: 'Abr 17', mama: 48, prostata: 42 },
@@ -31,11 +55,54 @@ const data = [
   { date: 'Jun 10', mama: 72, prostata: 60 },
 ];
 
-export function DiagnosticTrends() {
+const chartConfig: ChartConfig = {
+  grid: {
+    stroke: '#e2e8f0',
+  },
+  axis: {
+    stroke: '#64748b',
+    text: '#334155',
+  },
+};
+
+// Tipo para los datos del tooltip
+// type TooltipPayload = {
+//   value: number;
+//   name: string;
+//   color: string;
+// };
+
+const CustomTooltip = ({
+  active,
+  payload,
+  label,
+}: TooltipProps<ValueType, NameType>) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="bg-white p-4 border border-gray-200 rounded-lg shadow-sm">
+        <p className="text-gray-600 mb-2">{label}</p>
+        {payload.map((entry, index) => (
+          <p key={index} className="text-sm" style={{ color: entry.color }}>
+            {entry.name}: {entry.value?.toLocaleString()}
+          </p>
+        ))}
+      </div>
+    );
+  }
+  return null;
+};
+
+const CustomizedDot: React.FC<CustomDotProps> = ({ cx, cy, stroke }) => {
   return (
-    <Card className="col-span-2 bg-gray-900">
+    <circle cx={cx} cy={cy} r={4} stroke={stroke} strokeWidth={2} fill="#fff" />
+  );
+};
+
+const DiagnosticTrends: React.FC = () => {
+  return (
+    <Card className="col-span-2 bg-white">
       <CardHeader>
-        <CardTitle className="text-gray-100">
+        <CardTitle className="text-gray-900">
           Tendencias de Diagnósticos
         </CardTitle>
       </CardHeader>
@@ -48,16 +115,16 @@ export function DiagnosticTrends() {
             >
               <CartesianGrid
                 strokeDasharray="3 3"
-                stroke={chartConfig.theme.grid.line.stroke}
+                stroke={chartConfig.grid.stroke}
               />
               <XAxis
                 dataKey="date"
-                stroke={chartConfig.theme.axis.domain.line.stroke}
-                tick={{ fill: chartConfig.theme.axis.ticks.text.fill }}
+                stroke={chartConfig.axis.stroke}
+                tick={{ fill: chartConfig.axis.text }}
               />
               <YAxis
-                stroke={chartConfig.theme.axis.domain.line.stroke}
-                tick={{ fill: chartConfig.theme.axis.ticks.text.fill }}
+                stroke={chartConfig.axis.stroke}
+                tick={{ fill: chartConfig.axis.text }}
               />
               <Tooltip content={<CustomTooltip />} />
               <Line
@@ -65,14 +132,16 @@ export function DiagnosticTrends() {
                 dataKey="mama"
                 stroke="#ec4899"
                 name="Cáncer de Mama"
-                dot={<CustomizedDot />}
+                dot={<CustomizedDot cx={0} cy={0} stroke={''} />}
+                strokeWidth={2}
               />
               <Line
                 type="monotone"
                 dataKey="prostata"
                 stroke="#3b82f6"
                 name="Cáncer de Próstata"
-                dot={<CustomizedDot />}
+                dot={<CustomizedDot cx={0} cy={0} stroke={''} />}
+                strokeWidth={2}
               />
             </LineChart>
           </ResponsiveContainer>
@@ -80,4 +149,6 @@ export function DiagnosticTrends() {
       </CardContent>
     </Card>
   );
-}
+};
+
+export default DiagnosticTrends;
