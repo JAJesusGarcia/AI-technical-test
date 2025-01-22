@@ -39,7 +39,7 @@ export function Hero() {
                   Comenzar ahora
                 </Button>
               </Link>
-              <Link href="/about">
+              <Link href="/articles">
                 <Button
                   size="lg"
                   variant="outline"
