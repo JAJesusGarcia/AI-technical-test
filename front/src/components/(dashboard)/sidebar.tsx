@@ -12,11 +12,11 @@ import {
   PanelLeftClose,
   PanelLeftOpen,
 } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { useAuth } from '@/context/auth-context';
+import { AuthContext } from '@/context/auth-context';
 import {
   Tooltip,
   TooltipContent,
@@ -62,7 +62,7 @@ const cancerNav = [
 
 export function Sidebar() {
   const pathname = usePathname();
-  const { auth, logout } = useAuth();
+  const { user, logout } = useContext(AuthContext);
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   return (
@@ -119,33 +119,39 @@ export function Sidebar() {
               ))}
             </div>
 
-            <div className="my-4 border-t" />
+            {user && (
+              <>
+                <div className="my-4 border-t" />
 
-            <div className="space-y-2">
-              {cancerNav.map((item) => (
-                <Tooltip key={item.href}>
-                  <TooltipTrigger asChild>
-                    <Link
-                      href={item.href}
-                      className={cn(
-                        'flex h-10 items-center gap-4 rounded-md px-3 text-foreground/60 transition-colors hover:bg-accent hover:text-accent-foreground',
-                        isCollapsed && 'justify-center px-0',
-                        pathname === item.href &&
-                          'bg-accent text-accent-foreground',
+                <div className="space-y-2">
+                  {cancerNav.map((item) => (
+                    <Tooltip key={item.href}>
+                      <TooltipTrigger asChild>
+                        <Link
+                          href={item.href}
+                          className={cn(
+                            'flex h-10 items-center gap-4 rounded-md px-3 text-foreground/60 transition-colors hover:bg-accent hover:text-accent-foreground',
+                            isCollapsed && 'justify-center px-0',
+                            pathname === item.href &&
+                              'bg-accent text-accent-foreground',
+                          )}
+                        >
+                          {item.icon}
+                          {!isCollapsed && (
+                            <span className="flex-grow">{item.title}</span>
+                          )}
+                        </Link>
+                      </TooltipTrigger>
+                      {isCollapsed && (
+                        <TooltipContent side="right">
+                          {item.title}
+                        </TooltipContent>
                       )}
-                    >
-                      {item.icon}
-                      {!isCollapsed && (
-                        <span className="flex-grow">{item.title}</span>
-                      )}
-                    </Link>
-                  </TooltipTrigger>
-                  {isCollapsed && (
-                    <TooltipContent side="right">{item.title}</TooltipContent>
-                  )}
-                </Tooltip>
-              ))}
-            </div>
+                    </Tooltip>
+                  ))}
+                </div>
+              </>
+            )}
           </nav>
 
           <div className="border-t p-4">
@@ -156,30 +162,36 @@ export function Sidebar() {
               )}
             >
               {!isCollapsed ? (
-                <>
-                  <div className="flex flex-1 items-center gap-4 overflow-hidden">
-                    <div className="rounded-full bg-primary/10 p-1">
-                      <div className="h-8 w-8 rounded-full bg-primary/10" />
-                    </div>
-                    <div className="grid gap-1 overflow-hidden">
-                      <div className="font-medium leading-none">
-                        {auth.user?.name}
+                user ? (
+                  <>
+                    <div className="flex flex-1 items-center gap-4 overflow-hidden">
+                      <div className="rounded-full bg-primary/10 p-1">
+                        <div className="h-8 w-8 rounded-full bg-primary/10" />
                       </div>
-                      <div className="text-xs text-muted-foreground">
-                        {auth.user?.email}
+                      <div className="grid gap-1 overflow-hidden">
+                        <div className="font-medium leading-none">
+                          {user.email}
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          {user.email}
+                        </div>
                       </div>
                     </div>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8"
+                      onClick={() => logout()}
+                    >
+                      <LogOut className="h-4 w-4" />
+                      <span className="sr-only">Cerrar sesión</span>
+                    </Button>
+                  </>
+                ) : (
+                  <div className="text-sm text-muted-foreground">
+                    No hay usuario autenticado.
                   </div>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-8 w-8"
-                    onClick={() => logout()}
-                  >
-                    <LogOut className="h-4 w-4" />
-                    <span className="sr-only">Cerrar sesión</span>
-                  </Button>
-                </>
+                )
               ) : (
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -197,7 +209,7 @@ export function Sidebar() {
                 </Tooltip>
               )}
             </div>
-            {!isCollapsed && (
+            {!isCollapsed && user && (
               <Button variant="outline" size="sm" className="w-full">
                 <Settings className="mr-2 h-4 w-4" />
                 Configuración

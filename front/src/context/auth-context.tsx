@@ -1,66 +1,65 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect } from 'react';
-import type { AuthStatus, User } from '@/types/auth';
+import React, { createContext, useState, useEffect } from 'react';
 
-type AuthContextType = {
-  auth: AuthStatus;
-  login: (user: User) => void;
+interface UserSession {
+  token: string;
+  email: string;
+  // Agrega más propiedades según tu backend
+}
+
+interface AuthProviderProps {
+  children: React.ReactNode;
+}
+
+interface AuthContextProps {
+  user: UserSession | null;
+  setUser: (user: UserSession | null) => void;
   logout: () => void;
-};
+}
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextProps>({
+  user: null,
+  setUser: () => {},
+  logout: () => {},
+});
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [auth, setAuth] = useState<AuthStatus>({
-    isAuthenticated: false,
-    user: null,
+export const AuthProvider = ({ children }: AuthProviderProps) => {
+  const [userState, setUserState] = useState<UserSession | null>(() => {
+    if (typeof window !== 'undefined') {
+      const storedUser = localStorage.getItem('user');
+      return storedUser ? (JSON.parse(storedUser) as UserSession) : null;
+    }
+    return null;
   });
 
-  useEffect(() => {
-    // Check localStorage for user data on mount
-    const userData = localStorage.getItem('user');
-    if (userData) {
-      try {
-        const user = JSON.parse(userData);
-        setAuth({
-          isAuthenticated: true,
-          user,
-        });
-      } catch (error) {
-        console.error('Error parsing user data:', error);
-        localStorage.removeItem('user');
-      }
+  const setUser = (newUser: UserSession | null) => {
+    if (newUser) {
+      localStorage.setItem('user', JSON.stringify(newUser));
+    } else {
+      localStorage.removeItem('user');
     }
-  }, []);
-
-  const login = (user: User) => {
-    setAuth({
-      isAuthenticated: true,
-      user,
-    });
-    localStorage.setItem('user', JSON.stringify(user));
+    setUserState(newUser);
   };
 
   const logout = () => {
-    setAuth({
-      isAuthenticated: false,
-      user: null,
-    });
     localStorage.removeItem('user');
+    setUserState(null);
+
+    // Notificar otros componentes que dependan del estado del usuario
+    window.dispatchEvent(new Event('userLogout'));
   };
 
+  useEffect(() => {
+    const localUser = localStorage.getItem('user');
+    if (localUser) {
+      setUser(JSON.parse(localUser));
+    }
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ auth, login, logout }}>
+    <AuthContext.Provider value={{ user: userState, setUser, logout }}>
       {children}
     </AuthContext.Provider>
   );
-}
-
-export function useAuth() {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
-}
+};

@@ -20,6 +20,8 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { TestimonialsCarousel } from '../testimonials-carrusel';
+import { useContext } from 'react';
+import { AuthContext } from '@/context/auth-context';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -27,6 +29,7 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
+  const { setUser } = useContext(AuthContext);
 
   const form = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
@@ -49,17 +52,18 @@ export default function LoginPage() {
         throw new Error('Credenciales inválidas');
       }
 
-      const { token } = await response.json();
+      const { token, user } = await response.json();
 
-      // Guardar el token en localStorage
+      // Guarda el token en localStorage y actualiza el contexto
       localStorage.setItem('authToken', token);
+      setUser(user); // Actualiza el estado global del usuario
 
       toast({
         title: '¡Bienvenido!',
         description: 'Has iniciado sesión correctamente.',
       });
 
-      router.push('/dashboard');
+      router.push('/dashboard'); // Redirige al dashboard
     } catch (error) {
       console.error('Error al iniciar sesión:', error);
       toast({

@@ -13,7 +13,7 @@ export function middleware(request: NextRequest) {
     request.nextUrl.pathname.startsWith(route),
   );
 
-  // Para mantener compatibilidad, verifica solo la existencia de un token en cookies
+  // Verificar la existencia del token en las cookies
   const authToken = request.cookies.get('authToken')?.value;
 
   if (!authToken && isProtectedRoute) {

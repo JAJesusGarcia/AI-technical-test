@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useContext, useEffect, useState } from 'react';
 import { Activity, Brain, Clock, Users, ChevronDown } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -9,6 +8,8 @@ import { AnimatedStat } from '@/components/(dashboard)/animated-stat';
 import { DiagnosticTrends } from '@/components/(dashboard)/charts/diagnostic-trnds';
 import { DiagnosticDistribution } from '@/components/(dashboard)/charts/diagnostic-distribution';
 import { PlatformUsage } from '@/components/(dashboard)/charts/platform-usage';
+import { useRouter } from 'next/navigation';
+import { AuthContext } from '@/context/auth-context';
 
 interface StatData {
   title: string;
@@ -56,14 +57,25 @@ const stats: StatData[] = [
 ];
 
 export default function DashboardPage() {
+  const { user } = useContext(AuthContext);
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('authToken');
-    if (!token) {
+    if (!user) {
       router.push('/login');
+    } else {
+      setLoading(false);
     }
-  }, [router]);
+  }, [user, router]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p className="text-lg font-medium text-muted-foreground">Cargando...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="flex-1 space-y-6 p-4 md:p-8 pt-6 bg-gray-50">
@@ -116,51 +128,6 @@ export default function DashboardPage() {
         <Card className="col-span-1 lg:col-span-3 p-6 hover:shadow-lg transition-shadow duration-200">
           <h3 className="font-semibold mb-4">Uso de la Plataforma</h3>
           <PlatformUsage />
-        </Card>
-      </div>
-
-      {/* Quick Actions */}
-      <div className="grid gap-4 grid-cols-1 md:grid-cols-3">
-        <Card className="p-6 hover:shadow-lg transition-all duration-200 hover:-translate-y-1 cursor-pointer bg-gradient-to-br from-blue-50 to-blue-100/50">
-          <div className="flex items-center gap-4">
-            <div className="p-3 rounded-full bg-blue-500/10">
-              <Brain className="h-6 w-6 text-blue-600" />
-            </div>
-            <div>
-              <h3 className="font-semibold">Nuevo Análisis</h3>
-              <p className="text-sm text-muted-foreground">
-                Iniciar diagnóstico con IA
-              </p>
-            </div>
-          </div>
-        </Card>
-
-        <Card className="p-6 hover:shadow-lg transition-all duration-200 hover:-translate-y-1 cursor-pointer bg-gradient-to-br from-purple-50 to-purple-100/50">
-          <div className="flex items-center gap-4">
-            <div className="p-3 rounded-full bg-purple-500/10">
-              <Users className="h-6 w-6 text-purple-600" />
-            </div>
-            <div>
-              <h3 className="font-semibold">Gestionar Pacientes</h3>
-              <p className="text-sm text-muted-foreground">
-                Ver historial y registros
-              </p>
-            </div>
-          </div>
-        </Card>
-
-        <Card className="p-6 hover:shadow-lg transition-all duration-200 hover:-translate-y-1 cursor-pointer bg-gradient-to-br from-pink-50 to-pink-100/50">
-          <div className="flex items-center gap-4">
-            <div className="p-3 rounded-full bg-pink-500/10">
-              <Activity className="h-6 w-6 text-pink-600" />
-            </div>
-            <div>
-              <h3 className="font-semibold">Ver Estadísticas</h3>
-              <p className="text-sm text-muted-foreground">
-                Análisis detallado
-              </p>
-            </div>
-          </div>
         </Card>
       </div>
     </div>
