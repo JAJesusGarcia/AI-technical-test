@@ -21,7 +21,7 @@ interface ProcessStepProps {
 
 const ProcessStep = ({ icon: Icon, title, description }: ProcessStepProps) => {
   return (
-    <div className="group relative">
+    <div className="mx-auto flex min-h-screen flex-col group relative">
       <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       <Card className="relative p-6 bg-white/90 backdrop-blur-sm border-none shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
         <div className="flex flex-col items-center space-y-4">
