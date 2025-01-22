@@ -70,7 +70,11 @@ export default function TeamPage() {
       name: 'Ing. Carlos Mendoza',
       role: 'Chief Technology Officer',
       image: '/images/empresario-nuevo1.webp',
-      specialties: ['Inteligencia Artificial', 'Aprendizaje Automático'],
+      specialties: [
+        'Inteligencia Artificial',
+        'Aprendizaje Automático',
+        'Usuario inventado',
+      ],
       bio: 'Carlos lidera nuestro equipo de desarrollo tecnológico. Su experiencia en IA y aprendizaje automático impulsa la innovación continua en nuestras soluciones de detección de cáncer.',
       linkedin: '#',
       twitter: '#',
@@ -79,7 +83,11 @@ export default function TeamPage() {
       name: 'Lic. Ana Gómez',
       role: 'Chief Operating Officer',
       image: '/images/empresario3.webp',
-      specialties: ['Gestión de Operaciones', 'Estrategia Empresarial'],
+      specialties: [
+        'Gestión de Operaciones',
+        'Estrategia Empresarial',
+        'Usuario inventado',
+      ],
       bio: 'Ana supervisa las operaciones diarias de nuestra empresa. Su experiencia en gestión y estrategia empresarial asegura que nuestros procesos sean eficientes y efectivos.',
       linkedin: '#',
       twitter: '#',
@@ -126,10 +134,10 @@ export default function TeamPage() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent" />
                 <div className="absolute bottom-4 left-4 right-4">
-                  <h3 className="text-xl font-bold text-white mb-1">
+                  <h3 className="text-xl font-bold text-gray-500 mb-1">
                     {member.name}
                   </h3>
-                  <p className="text-white/80 text-sm">{member.role}</p>
+                  <p className="text-gray-400 text-sm">{member.role}</p>
                 </div>
               </div>
               <CardContent className="p-6 space-y-4">
