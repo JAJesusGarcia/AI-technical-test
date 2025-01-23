@@ -28,7 +28,90 @@ const patientsData = [
     lastAnalysis: '2023-08-15',
     status: 'error',
   },
-  // Add more sample data as needed
+  {
+    id: 4,
+    name: 'Emily Davis',
+    age: 50,
+    lastAnalysis: '2023-10-10',
+    status: 'completed',
+  },
+  {
+    id: 5,
+    name: 'Michael Brown',
+    age: 60,
+    lastAnalysis: '2023-09-20',
+    status: 'processing',
+  },
+  {
+    id: 6,
+    name: 'Sophia Wilson',
+    age: 38,
+    lastAnalysis: '2023-09-30',
+    status: 'error',
+  },
+  {
+    id: 7,
+    name: 'Liam Martinez',
+    age: 42,
+    lastAnalysis: '2023-08-25',
+    status: 'completed',
+  },
+  {
+    id: 8,
+    name: 'Olivia Anderson',
+    age: 36,
+    lastAnalysis: '2023-09-15',
+    status: 'completed',
+  },
+  {
+    id: 9,
+    name: 'Noah Taylor',
+    age: 47,
+    lastAnalysis: '2023-09-18',
+    status: 'processing',
+  },
+  {
+    id: 10,
+    name: 'Isabella Moore',
+    age: 32,
+    lastAnalysis: '2023-09-22',
+    status: 'error',
+  },
+  {
+    id: 11,
+    name: 'Ethan Clark',
+    age: 55,
+    lastAnalysis: '2023-08-30',
+    status: 'completed',
+  },
+  {
+    id: 12,
+    name: 'Mia Rodriguez',
+    age: 40,
+    lastAnalysis: '2023-09-10',
+    status: 'completed',
+  },
+  {
+    id: 13,
+    name: 'James Lewis',
+    age: 48,
+    lastAnalysis: '2023-09-05',
+    status: 'processing',
+  },
+  {
+    id: 14,
+    name: 'Ava Hall',
+    age: 27,
+    lastAnalysis: '2023-09-12',
+    status: 'error',
+  },
+  {
+    id: 15,
+    name: 'William Allen',
+    age: 65,
+    lastAnalysis: '2023-09-08',
+    status: 'completed',
+  },
 ];
 
 const Patients: NextPage = () => {
@@ -87,9 +170,9 @@ const Patients: NextPage = () => {
           />
         </div>
 
-        <table className="w-full bg-white text-gray-800 border-collapse shadow-md rounded-lg overflow-hidden">
+        <table className="w-full bg-white text-gray-800 border-gray-400 shadow-md rounded-lg overflow-hidden">
           <thead>
-            <tr className="bg-gray-200">
+            <tr className="bg-gray-100">
               <th className="p-2">Patient Name</th>
               <th className="p-2">ID</th>
               <th className="p-2">Age</th>
@@ -132,7 +215,7 @@ const Patients: NextPage = () => {
 
         {isModalOpen && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-            <div className="bg-white p-8 rounded shadow-lg w-full max-w-md">
+            <div className="bg-white border-gray-400 p-8 rounded shadow-lg w-full max-w-md">
               <h2 className="text-2xl font-bold mb-4">Add New Patient</h2>
               <form>
                 <div className="mb-4">
