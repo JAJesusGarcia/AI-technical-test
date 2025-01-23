@@ -23,11 +23,11 @@ export function HeroCompany() {
         </p>
         <div className="flex justify-center gap-4 pt-8">
           <Button size="lg" className="gap-2">
-            Conoce Nuestra Tecnología
+            <a href="/tecnologias">Conoce Nuestra Tecnología</a>
             <ChevronRight className="h-4 w-4" />
           </Button>
           <Button size="lg" variant="outline">
-            Contactar
+            <a href="/soporte">Contactar</a>
           </Button>
         </div>
       </div>

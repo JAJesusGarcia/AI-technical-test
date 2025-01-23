@@ -177,7 +177,7 @@ export default function CompanyPage() {
               </p>
               <div className="flex justify-center pt-6">
                 <Button className="gap-2">
-                  Únete a Nuestro Futuro
+                  <a href="/jobs">Únete a Nuestro Futuro</a>
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </div>

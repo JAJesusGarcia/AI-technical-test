@@ -94,8 +94,11 @@ export function Navbar() {
 
   const privateLinks = [
     { href: '/dashboard', label: 'Dashboard' },
-    { href: '/breast-cancer', label: 'Cáncer de Mama' },
-    { href: '/prostate-cancer', label: 'Cáncer de Próstata' },
+    { href: '/dashboard/breast-cancer/cancer-mama', label: 'Cáncer de Mama' },
+    {
+      href: '/dashboard/breast-cancer/cancer-prostata',
+      label: 'Cáncer de Próstata',
+    },
   ];
 
   // Prevent hydration mismatch

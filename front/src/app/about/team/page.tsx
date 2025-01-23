@@ -217,7 +217,7 @@ export default function TeamPage() {
                 atención médica, nos encantaría saber de ti.
               </p>
               <Button size="lg" className="mt-8 gap-2">
-                Ver Oportunidades
+                <a href="/oportunidades">Ver Oportunidades</a>
                 <ArrowRight className="h-4 w-4" />
               </Button>
             </CardContent>
