@@ -117,7 +117,7 @@ export function Navbar() {
               <NavigationMenuItem>
                 <NavigationMenuTrigger>About Us</NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                  <ul className="grid w-[400px] gap-3 p-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                     <ListItem href="/about/company" title="Company">
                       Learn about our companys mission and vision
                     </ListItem>
