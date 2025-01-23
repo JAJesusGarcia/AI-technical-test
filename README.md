@@ -45,7 +45,7 @@ Funcionalidades principales:
 #### Pasos de Instalación
 
 ```bash
-git clone https://github.com/tu-usuario/tu-repo.git
+git clone https://github.com/JAJesusGarcia/AI-technical-test.git
 cd tu-repo
 npm install
 ```
@@ -71,19 +71,19 @@ Accede a: http://localhost:3000
 #### Construcción de Imagen
 
 ```bash
-docker build -t frontend-digpatho .
+docker build -t frontend-app .
 ```
 
 #### Ejecución del Contenedor
 
 ```bash
-docker run -d -p 3000:80 --name frontend-digpatho-container frontend-digpatho
+docker run -d -p 3000:80 --name frontend-container frontend-app
 ```
 
 #### Detención del Contenedor
 
 ```bash
-docker stop frontend-digpatho-container && docker rm frontend-digpatho-container
+docker stop frontend-container && docker rm frontend-container
 ```
 
 ### Mejoras
@@ -105,9 +105,10 @@ docker stop frontend-digpatho-container && docker rm frontend-digpatho-container
 - Dockerfile para portabilidad
 - Documentación detallada
 
-### Demostración
+### Demostración y Despliegue
 
-[Enlace al Video de Demostración]
+- [Video de Demostración]
+- Accede a la aplicación: https://ai-technical-test.vercel.app/
 
 ---
 
