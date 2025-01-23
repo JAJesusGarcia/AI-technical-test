@@ -157,7 +157,13 @@ export default function TeamPage() {
                 </p>
                 <div className="flex gap-4 pt-4">
                   <Button variant="ghost" size="icon">
-                    <LinkedinIcon className="h-5 w-5" />
+                    <a
+                      href={member.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <LinkedinIcon className="h-5 w-5" />
+                    </a>
                   </Button>
                   <Button variant="ghost" size="icon">
                     <TwitterIcon className="h-5 w-5" />
