@@ -20,7 +20,7 @@ const UploadPage: React.FC = () => {
       toast({
         title: 'Error',
         description: 'Por favor selecciona un archivo antes de subirlo.',
-        variant: 'error',
+        variant: 'destructive',
       });
       return;
     }
@@ -40,7 +40,7 @@ const UploadPage: React.FC = () => {
       toast({
         title: 'Error',
         description: 'Hubo un problema al subir el archivo.',
-        variant: 'error',
+        variant: 'destructive',
       });
     } finally {
       setIsUploading(false);
