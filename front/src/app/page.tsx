@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Brain,
   Search,
@@ -7,11 +9,12 @@ import {
   Users,
   Clock,
   Shield,
+  LucideIcon,
 } from 'lucide-react';
-import type { LucideIcon } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Hero } from '@/components/sections/Hero';
+import React, { useState, useEffect, useRef } from 'react';
 
 interface ProcessStepProps {
   icon: LucideIcon;
@@ -37,17 +40,89 @@ const ProcessStep = ({ icon: Icon, title, description }: ProcessStepProps) => {
 };
 
 interface StatProps {
-  icon: LucideIcon;
-  value: string;
+  icon: React.ComponentType<{ size: number; className?: string }>;
+  finalValue: number | string;
   label: string;
+  duration?: number;
+  isPercentage?: boolean;
 }
 
-const Stat = ({ icon: Icon, value, label }: StatProps) => {
+const AnimatedStat: React.FC<StatProps> = ({
+  icon: Icon,
+  finalValue,
+  label,
+  duration = 2000,
+  isPercentage = false,
+}) => {
+  const [value, setValue] = useState(0);
+  const statRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const currentStatRef = statRef.current;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 },
+    );
+
+    if (currentStatRef) {
+      observer.observe(currentStatRef);
+    }
+
+    return () => {
+      if (currentStatRef) {
+        observer.unobserve(currentStatRef);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
+    const numericFinalValue =
+      typeof finalValue === 'string'
+        ? parseFloat(finalValue.replace(/[^0-9.-]/g, ''))
+        : finalValue;
+
+    const startTime = Date.now();
+    const updateValue = () => {
+      const progress = Math.min((Date.now() - startTime) / duration, 1);
+      const currentValue = progress * numericFinalValue;
+
+      setValue(currentValue);
+
+      if (progress < 1) {
+        requestAnimationFrame(updateValue);
+      }
+    };
+
+    requestAnimationFrame(updateValue);
+  }, [finalValue, duration, isVisible]);
+
+  const formatValue = () => {
+    if (typeof finalValue === 'string' && finalValue.includes('<'))
+      return finalValue;
+
+    const displayValue = isPercentage
+      ? value.toFixed(1) + '%'
+      : value.toLocaleString().split('.')[0] + '+';
+
+    return displayValue;
+  };
+
   return (
-    <div className="flex flex-col items-center space-y-2 p-6 text-center">
+    <div
+      ref={statRef}
+      className="flex flex-col items-center space-y-2 p-6 text-center"
+    >
       <Icon size={32} className="text-primary" />
       <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
-        {value}
+        {formatValue()}
       </div>
       <div className="text-muted-foreground">{label}</div>
     </div>
@@ -111,10 +186,28 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <Stat icon={Users} value="10,000+" label="Pacientes Atendidos" />
-            <Stat icon={Trophy} value="99.8%" label="Precisión Diagnóstica" />
-            <Stat icon={Clock} value="<24h" label="Tiempo de Respuesta" />
-            <Stat icon={Shield} value="100%" label="Datos Protegidos" />
+            <AnimatedStat
+              icon={Users}
+              finalValue={10000}
+              label="Pacientes Atendidos"
+            />
+            <AnimatedStat
+              icon={Trophy}
+              finalValue={99.8}
+              label="Precisión Diagnóstica"
+              isPercentage={true}
+            />
+            <AnimatedStat
+              icon={Clock}
+              finalValue="<24h"
+              label="Tiempo de Respuesta"
+            />
+            <AnimatedStat
+              icon={Shield}
+              finalValue={100}
+              label="Datos Protegidos"
+              isPercentage={true}
+            />
           </div>
 
           <div className="text-center mt-12">
