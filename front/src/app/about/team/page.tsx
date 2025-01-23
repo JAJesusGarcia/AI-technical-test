@@ -9,8 +9,8 @@ import {
   HandshakeIcon,
   ArrowRight,
   LinkedinIcon,
-  TwitterIcon,
   Mail,
+  FacebookIcon,
 } from 'lucide-react';
 
 export default function TeamPage() {
@@ -166,7 +166,7 @@ export default function TeamPage() {
                     </a>
                   </Button>
                   <Button variant="ghost" size="icon">
-                    <TwitterIcon className="h-5 w-5" />
+                    <FacebookIcon className="h-5 w-5" />
                   </Button>
                   <Button variant="ghost" size="icon">
                     <Mail className="h-5 w-5" />
