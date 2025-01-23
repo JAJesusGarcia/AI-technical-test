@@ -119,10 +119,10 @@ export function Navbar() {
                 <NavigationMenuContent>
                   <ul className="grid w-[400px] gap-3 p-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                     <ListItem href="/about/company" title="Company">
-                      Learn about our companys mission and vision
+                      Conozca la misión y visión de su empresa
                     </ListItem>
                     <ListItem href="/about/team" title="Our Team">
-                      Meet the experts behind our technology
+                      Conozca a los expertos detrás de nuestra tecnología.
                     </ListItem>
                   </ul>
                 </NavigationMenuContent>
@@ -168,16 +168,16 @@ export function Navbar() {
               <AlertDialogContent>
                 <AlertDialogHeader>
                   <AlertDialogTitle>
-                    Are you sure you want to logout?
+                    ¿Estás seguro de que quieres cerrar sesión?
                   </AlertDialogTitle>
                   <AlertDialogDescription>
-                    This action will log you out of your account.
+                    Esta acción cerrará tu sesión de tu cuenta.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogCancel>Cancelar</AlertDialogCancel>
                   <AlertDialogAction onClick={handleLogout}>
-                    Logout
+                    Salir
                   </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
