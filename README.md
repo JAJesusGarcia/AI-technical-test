@@ -55,7 +55,7 @@ npm install
 Crea un archivo `.env.local`:
 
 ```env
-NEXT_PUBLIC_API_URL=http://localhost:3001
+NEXT_PUBLIC_API_URL=https://ai-technical-test.onrender.com
 ```
 
 #### Ejecución en Desarrollo
