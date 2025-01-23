@@ -107,7 +107,7 @@ docker stop frontend-container && docker rm frontend-container
 
 ### Demostración y Despliegue
 
-- [Video de Demostración]
+- Video de Demostración: https://www.youtube.com
 - Accede a la aplicación: https://ai-technical-test.vercel.app/
 
 ---
