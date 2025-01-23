@@ -11,6 +11,7 @@ import {
   Users,
   LogOut,
   Menu,
+  User,
 } from 'lucide-react';
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '@/context/auth-context';
@@ -118,7 +119,7 @@ export function Sidebar() {
           <div className="flex items-center gap-4 pb-4">
             <div className="flex flex-1 items-center gap-4 overflow-hidden">
               <div className="rounded-full bg-white/10 p-1">
-                <div className="h-8 w-8 rounded-full bg-white/10" />
+                <User className="h-8 w-8 text-white" />
               </div>
               <div className="grid gap-1 overflow-hidden">
                 <div className="font-medium leading-none">
