@@ -1,4 +1,4 @@
-import { Users } from 'lucide-react';
+// import { Users } from 'lucide-react';
 import React from 'react';
 
 export function HeroTeam() {
@@ -10,9 +10,9 @@ export function HeroTeam() {
       </div>
 
       <div className="relative text-center space-y-6 max-w-4xl mx-auto">
-        <div className="w-16 h-16 mx-auto mb-6 bg-primary/10 rounded-2xl flex items-center justify-center">
+        {/* <div className="w-16 h-16 mx-auto mb-6 bg-primary/10 rounded-2xl flex items-center justify-center">
           <Users className="h-8 w-8 text-purple-800" />
-        </div>
+        </div> */}
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight animate-fade-in">
           Nuestro Equipo
         </h1>
