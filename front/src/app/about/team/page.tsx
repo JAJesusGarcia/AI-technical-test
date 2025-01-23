@@ -62,7 +62,7 @@ export default function TeamPage() {
         'Next.js',
         'TypeScript',
       ],
-      bio: 'Mi compromiso es crear experiencias de usuario intuitivas y accesibles, utilizando tecnologías punteras como Next.js, React y Node.js, y estoy en la búsqueda de oportunidades que me permitan seguir creciendo profesionalmente mientras continúo con mis estudios universitarios.',
+      bio: 'Mi compromiso es crear experiencias de usuario intuitivas y accesibles, utilizando tecnologías punteras como Next.js, React y Node.js, contribuyendo al desarrollo de esta aplicación innovadora para la detección temprana de cáncer.',
       linkedin: 'https://www.linkedin.com/in/jesusjagarcia/',
       twitter: '#',
     },
