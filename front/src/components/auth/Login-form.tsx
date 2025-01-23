@@ -58,8 +58,10 @@ export default function LoginPage() {
       setUser({ token, email: data.email });
 
       toast({
-        title: '¡Bienvenido!',
-        description: 'Has iniciado sesión correctamente.',
+        title: 'Bienvenido!',
+        description: 'You have successfully logged in',
+        variant: 'success',
+        duration: 5000,
       });
 
       router.push('/dashboard');

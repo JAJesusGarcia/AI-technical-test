@@ -52,8 +52,10 @@ export default function RegisterPage() {
       }
 
       toast({
-        title: '¡Registro exitoso!',
-        description: 'Tu cuenta ha sido creada correctamente.',
+        title: 'Bienvenido!',
+        description: 'Registro exitoso!',
+        variant: 'success',
+        duration: 5000,
       });
 
       router.push('/login');
