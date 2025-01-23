@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Mail, Lock } from 'lucide-react';
 import { useToast } from '../ui/use-toast';
 import { loginSchema, type LoginInput } from '@/lib/validations/auth';
 import { Button } from '@/components/ui/button';
@@ -51,14 +51,10 @@ export default function LoginPage() {
       }
 
       const { token } = await response.json();
-
-      // Guardar el token en localStorage
       localStorage.setItem(
         'user',
         JSON.stringify({ token, email: data.email }),
       );
-
-      // Actualizar el contexto de autenticación
       setUser({ token, email: data.email });
 
       toast({
@@ -81,66 +77,108 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="container grid min-h-screen grid-cols-1 lg:grid-cols-2">
-      <div className="relative hidden h-full flex-col bg-muted p-10 text-white lg:flex">
-        <div className="absolute inset-0 bg-primary opacity-90" />
-        <div className="relative z-20">
-          <h2 className="mb-6 text-lg font-medium text-white">Testimonios</h2>
+    <div className="container relative min-h-screen bg-muted/5">
+      <div className="grid min-h-screen grid-cols-1 overflow-hidden lg:grid-cols-2">
+        <div className="relative hidden lg:block">
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-700 via-purple-400 to-pink-300" />
           <TestimonialsCarousel />
         </div>
-      </div>
 
-      <div className="flex flex-col items-center justify-center p-8">
-        <div className="w-full max-w-md space-y-6">
-          <div className="text-center">
-            <h1 className="text-2xl font-semibold">Bienvenido de nuevo</h1>
-            <p className="text-sm text-muted-foreground">
-              Ingresa tus credenciales para acceder a tu cuenta
+        <div className="flex flex-col items-center justify-center px-8 py-16 md:px-16 lg:px-24">
+          <div className="mx-auto w-full max-w-md space-y-8">
+            <div className="space-y-2 text-center">
+              <h1 className="text-3xl font-bold tracking-tight">
+                Bienvenido de nuevo
+              </h1>
+              <p className="text-muted-foreground">
+                Ingresa tus credenciales para acceder a tu cuenta
+              </p>
+            </div>
+
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-6"
+              >
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <div className="relative">
+                          <Mail className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
+                          <Input
+                            placeholder="doctor@hospital.com"
+                            className="pl-10"
+                            {...field}
+                          />
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Contraseña</FormLabel>
+                      <FormControl>
+                        <div className="relative">
+                          <Lock className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
+                          <Input type="password" className="pl-10" {...field} />
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button
+                  type="submit"
+                  className="w-full transition-all hover:scale-[1.02]"
+                  disabled={isLoading}
+                >
+                  {isLoading && (
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  )}
+                  Iniciar sesión
+                </Button>
+              </form>
+            </Form>
+
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-background px-2 text-muted-foreground">
+                  O continúa con
+                </span>
+              </div>
+            </div>
+
+            <div className="grid gap-4">
+              <Button
+                variant="outline"
+                className="transition-all hover:scale-[1.02]"
+              >
+                Continuar con Google
+              </Button>
+            </div>
+
+            <p className="text-center text-sm text-muted-foreground">
+              ¿No tienes una cuenta?{' '}
+              <Link
+                href="/register"
+                className="font-medium text-primary underline-offset-4 transition-colors hover:underline"
+              >
+                Regístrate
+              </Link>
             </p>
           </div>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input placeholder="doctor@hospital.com" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Contraseña</FormLabel>
-                    <FormControl>
-                      <Input type="password" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Iniciar sesión
-              </Button>
-            </form>
-          </Form>
-          <p className="text-center text-sm text-muted-foreground">
-            ¿No tienes una cuenta?{' '}
-            <Link
-              href="/register"
-              className="underline underline-offset-4 hover:text-primary"
-            >
-              Regístrate
-            </Link>
-          </p>
         </div>
       </div>
     </div>

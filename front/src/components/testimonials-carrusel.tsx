@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import type React from 'react';
 
 interface Testimonial {
   quote: string;
@@ -30,33 +30,24 @@ const testimonials: Testimonial[] = [
 ];
 
 export const TestimonialsCarousel: React.FC = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
-    }, 5000); // Cambia cada 5 segundos
-
-    return () => clearInterval(interval);
-  }, []);
+  // Duplicamos los testimonios para lograr el bucle infinito
+  const extendedTestimonials = [...testimonials, ...testimonials];
 
   return (
-    <div className="relative h-full p-8">
-      <div className="relative space-y-8">
-        {testimonials.map((testimonial, index) => (
+    <div className="relative h-full overflow-hidden">
+      <div className="absolute w-full animate-slide-vertical space-y-8">
+        {extendedTestimonials.map((testimonial, index) => (
           <blockquote
             key={index}
-            className={`transition-opacity duration-1000 ${
-              index === currentIndex ? 'opacity-100' : 'opacity-0'
-            }`}
+            className="space-y-2 border-l border-primary/30 pl-6"
           >
-            <p className="text-lg font-semibold text-white">
-              {testimonial.quote}
-            </p>
-            <footer className="mt-2 text-sm text-white">
-              <strong>{testimonial.author}</strong>
+            <strong>
+              <p className="text-lg text-white">{testimonial.quote}</p>
+            </strong>
+            <footer className="text-sm">
+              <span className="text-primary">{testimonial.author}</span>
               <br />
-              <span className="text-primary">{testimonial.role}</span>
+              <span className="text-white/70">{testimonial.role}</span>
             </footer>
           </blockquote>
         ))}
