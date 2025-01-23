@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 // pages/patients.tsx
 import React, { useState } from 'react';
@@ -55,7 +55,7 @@ const Patients: NextPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white p-8">
+    <div className="min-h-screen bg-gray-200 p-8">
       <Head>
         <title>Patients - AI Breast Cancer Detection</title>
         <meta
@@ -64,13 +64,17 @@ const Patients: NextPage = () => {
         />
       </Head>
 
-      <header className="text-center mb-8">
-        <h1 className="text-4xl font-bold animate-pulse">Patients</h1>
-        <p className="text-lg text-gray-200">
+      <div className="flex items-center justify-between space-y-2">
+        <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+          Pacientes
+        </h1>
+        <p className="text-lg text-gray-600">
           Manage and view patient details for AI-powered breast cancer
           detection.
         </p>
-      </header>
+      </div>
+
+      <br />
 
       <main>
         <div className="mb-4">
@@ -120,7 +124,7 @@ const Patients: NextPage = () => {
         </table>
 
         <button
-          className="mt-4 px-4 py-2 bg-pink-500 text-white rounded shadow hover:bg-pink-600 transition-colors duration-300"
+          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded shadow hover:bg-blue-600 transition-colors duration-300"
           onClick={openModal}
         >
           Add New Patient
