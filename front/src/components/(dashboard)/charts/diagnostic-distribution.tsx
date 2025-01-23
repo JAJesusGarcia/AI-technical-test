@@ -91,7 +91,7 @@ const DiagnosticDistribution: React.FC = () => {
               <div className="text-3xl font-bold text-gray-900">
                 {totalDiagnostics.toLocaleString()}
               </div>
-              <div className="text-sm text-gray-600">Total Diagnósticos</div>
+              <div className="text-xs text-gray-600">Total Diagnósticos</div>
             </div>
           </div>
         </div>
