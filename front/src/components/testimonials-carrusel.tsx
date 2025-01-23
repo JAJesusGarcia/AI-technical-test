@@ -30,24 +30,24 @@ const testimonials: Testimonial[] = [
 ];
 
 export const TestimonialsCarousel: React.FC = () => {
-  // Duplicamos los testimonios para lograr el bucle infinito
   const extendedTestimonials = [...testimonials, ...testimonials];
 
   return (
-    <div className="relative h-full overflow-hidden">
+    <div className="relative h-[80vh] overflow-hidden">
       <div className="absolute w-full animate-slide-vertical space-y-8">
         {extendedTestimonials.map((testimonial, index) => (
           <blockquote
             key={index}
-            className="space-y-2 border-l border-primary/30 pl-6"
+            className="space-y-4 border-l-2 border-white/30 pl-6"
           >
-            <strong>
-              <p className="text-lg text-white">{testimonial.quote}</p>
-            </strong>
+            <p className="text-xl font-medium leading-relaxed text-white">
+              {testimonial.quote}
+            </p>
             <footer className="text-sm">
-              <span className="text-primary">{testimonial.author}</span>
-              <br />
-              <span className="text-white/70">{testimonial.role}</span>
+              <div className="font-semibold text-white">
+                {testimonial.author}
+              </div>
+              <div className="text-white/70">{testimonial.role}</div>
             </footer>
           </blockquote>
         ))}

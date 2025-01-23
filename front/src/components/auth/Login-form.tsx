@@ -81,7 +81,11 @@ export default function LoginPage() {
       <div className="grid min-h-screen grid-cols-1 overflow-hidden lg:grid-cols-2">
         <div className="relative hidden lg:block">
           <div className="absolute inset-0 bg-gradient-to-br from-blue-700 via-purple-400 to-pink-300" />
-          <TestimonialsCarousel />
+          <div className="relative h-full flex items-center justify-center">
+            <div className="w-full max-w-xl p-3">
+              <TestimonialsCarousel />
+            </div>
+          </div>
         </div>
 
         <div className="flex flex-col items-center justify-center px-8 py-16 md:px-16 lg:px-24">
