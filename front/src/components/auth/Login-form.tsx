@@ -77,7 +77,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="container relative min-h-screen bg-muted/5 ">
+    <div className="container relative min-h-screen bg-muted/5 bg-gray-200">
       <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen bg-gray-50">
         <div className="hidden lg:flex lg:flex-col lg:justify-center lg:items-stretch bg-gradient-to-br from-blue-700 via-purple-400 to-pink-300">
           <div className="w-full p-8">
