@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import Image from 'next/image';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Save, Trash } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -34,9 +34,9 @@ const formSchema = z.object({
   iaTotalCells: z.number().min(0, 'Debe ser mayor o igual a 0'),
   iaPositiveCells: z.number().min(0, 'Debe ser mayor o igual a 0'),
   ki67: z.number().min(0, 'Debe ser mayor o igual a 0'),
-  totalCells: z.number().min(0, 'Debe ser mayor o igual a 0'), // Este campo debe coincidir
-  positiveCells: z.number().min(0, 'Debe ser mayor o igual a 0'), // Este campo debe coincidir
-  negativeCells: z.number().min(0, 'Debe ser mayor o igual a 0'), // Este campo debe coincidir
+  totalCells: z.number().min(0, 'Debe ser mayor o igual a 0'),
+  positiveCells: z.number().min(0, 'Debe ser mayor o igual a 0'),
+  negativeCells: z.number().min(0, 'Debe ser mayor o igual a 0'),
   wrongKI67: z.number().min(0, 'Debe ser mayor o igual a 0'),
   wrongTotalCells: z.number().min(0, 'Debe ser mayor o igual a 0'),
   wrongPositiveCells: z.number().min(0, 'Debe ser mayor o igual a 0'),
@@ -56,9 +56,9 @@ export function KI67Analysis() {
       iaTotalCells: 0,
       iaPositiveCells: 0,
       ki67: 0,
-      totalCells: 0, // Asegúrate de que este nombre coincida con el campo en el esquema
-      positiveCells: 0, // Asegúrate de que este nombre coincida
-      negativeCells: 0, // Asegúrate de que este nombre coincida
+      totalCells: 0,
+      positiveCells: 0,
+      negativeCells: 0,
       wrongKI67: 0,
       wrongTotalCells: 0,
       wrongPositiveCells: 0,
@@ -74,7 +74,6 @@ export function KI67Analysis() {
       // Simular procesamiento
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      // Simular resultado
       const mockResult: AnalysisResult = {
         id: Math.random().toString(36).slice(2),
         type: 'KI67',
@@ -88,8 +87,8 @@ export function KI67Analysis() {
           totalNuclei: 200,
           positiveNuclei: 150,
           negativeNuclei: 50,
-          positivePercentage: 75, // Agregado
-          confidence: 95, // Agregado
+          positivePercentage: 75,
+          confidence: 95,
           wrongKI67: 10,
           wrongTotalCells: 5,
           wrongPositiveCells: 4,
@@ -98,23 +97,19 @@ export function KI67Analysis() {
         createdAt: new Date(),
       };
 
-      // Mapear nombres de `mockResult.values` a los usados en el formulario
       const mappedValues = {
         iaKI67: mockResult.values.iaKI67,
         iaTotalCells: mockResult.values.iaTotalCells,
         iaPositiveCells: mockResult.values.iaPositiveCells,
         ki67: mockResult.values.ki67,
-        totalCells: mockResult.values.totalNuclei, // Mapeo correcto
-        positiveCells: mockResult.values.positiveNuclei, // Mapeo correcto
-        negativeCells: mockResult.values.negativeNuclei, // Mapeo correcto
+        totalCells: mockResult.values.totalNuclei,
+        positiveCells: mockResult.values.positiveNuclei,
+        negativeCells: mockResult.values.negativeNuclei,
         wrongKI67: mockResult.values.wrongKI67,
         wrongTotalCells: mockResult.values.wrongTotalCells,
         wrongPositiveCells: mockResult.values.wrongPositiveCells,
         wrongNegativeCells: mockResult.values.wrongNegativeCells,
       };
-
-      // setResult(mockResult);
-      // form.reset(mockResult.values);
 
       setResult(mockResult);
       form.reset(mappedValues);
@@ -136,6 +131,37 @@ export function KI67Analysis() {
     }
   };
 
+  const handleSave = async (values: z.infer<typeof formSchema>) => {
+    try {
+      // Simular guardado y descarga
+      const data = JSON.stringify(values, null, 2);
+      const blob = new Blob([data], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `ki67-analysis-${new Date().toISOString()}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      toast({
+        variant: 'success',
+        title: 'Resultados guardados',
+        description: 'Los resultados han sido guardados correctamente.',
+      });
+
+      reset(); // Limpiar la vista de resultados
+    } catch (err) {
+      console.error(err);
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: 'Hubo un error al guardar los resultados.',
+      });
+    }
+  };
+
   const reset = () => {
     setFile(null);
     setResult(null);
@@ -143,7 +169,7 @@ export function KI67Analysis() {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 pb-10 bg-gray-200">
       <Card className="bg-white text-gray-800 shadow-lg rounded-lg">
         <CardHeader>
           <CardTitle className="text-2xl font-bold">Análisis KI67</CardTitle>
@@ -183,8 +209,8 @@ export function KI67Analysis() {
               Revisa y ajusta los resultados del análisis según sea necesario.
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
               <div className="space-y-2">
                 <h4 className="font-medium">Imagen Original</h4>
                 <div className="relative aspect-video border rounded-lg overflow-hidden">
@@ -211,219 +237,54 @@ export function KI67Analysis() {
 
             <Form {...form}>
               <form
-                onSubmit={form.handleSubmit((values) => console.log(values))}
+                onSubmit={form.handleSubmit(handleSave)}
                 className="space-y-4"
               >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <FormField
-                    control={form.control}
-                    name="iaKI67"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>IA KI67</FormLabel>
-                        <FormControl>
-                          <Input
-                            type="number"
-                            {...field}
-                            onChange={(e) =>
-                              field.onChange(Number(e.target.value))
-                            }
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="iaTotalCells"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>IA Total Cells</FormLabel>
-                        <FormControl>
-                          <Input
-                            type="number"
-                            {...field}
-                            onChange={(e) =>
-                              field.onChange(Number(e.target.value))
-                            }
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="iaPositiveCells"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>IA Positive Cells</FormLabel>
-                        <FormControl>
-                          <Input
-                            type="number"
-                            {...field}
-                            onChange={(e) =>
-                              field.onChange(Number(e.target.value))
-                            }
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="ki67"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>KI67</FormLabel>
-                        <FormControl>
-                          <Input
-                            type="number"
-                            {...field}
-                            onChange={(e) =>
-                              field.onChange(Number(e.target.value))
-                            }
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="totalCells"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Total Cells</FormLabel>
-                        <FormControl>
-                          <Input
-                            type="number"
-                            {...field}
-                            onChange={(e) =>
-                              field.onChange(Number(e.target.value))
-                            }
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="positiveCells"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Positive Cells</FormLabel>
-                        <FormControl>
-                          <Input
-                            type="number"
-                            {...field}
-                            onChange={(e) =>
-                              field.onChange(Number(e.target.value))
-                            }
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="negativeCells"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Negative Cells</FormLabel>
-                        <FormControl>
-                          <Input
-                            type="number"
-                            {...field}
-                            onChange={(e) =>
-                              field.onChange(Number(e.target.value))
-                            }
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="wrongKI67"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Wrong KI67</FormLabel>
-                        <FormControl>
-                          <Input
-                            type="number"
-                            {...field}
-                            onChange={(e) =>
-                              field.onChange(Number(e.target.value))
-                            }
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="wrongTotalCells"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Wrong Total Cells</FormLabel>
-                        <FormControl>
-                          <Input
-                            type="number"
-                            {...field}
-                            onChange={(e) =>
-                              field.onChange(Number(e.target.value))
-                            }
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="wrongPositiveCells"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Wrong Positive Cells</FormLabel>
-                        <FormControl>
-                          <Input
-                            type="number"
-                            {...field}
-                            onChange={(e) =>
-                              field.onChange(Number(e.target.value))
-                            }
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="wrongNegativeCells"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Wrong Negative Cells</FormLabel>
-                        <FormControl>
-                          <Input
-                            type="number"
-                            {...field}
-                            onChange={(e) =>
-                              field.onChange(Number(e.target.value))
-                            }
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                  {Object.keys(formSchema.shape).map((fieldName) => (
+                    <FormField
+                      key={fieldName}
+                      control={form.control}
+                      name={fieldName as keyof z.infer<typeof formSchema>}
+                      render={({ field }) => (
+                        <FormItem>
+                          {/* Usa fieldName como etiqueta o tradúcelo */}
+                          <FormLabel>
+                            {fieldName.replace(/([A-Z])/g, ' $1')}
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              type="number"
+                              {...field}
+                              onChange={(e) =>
+                                field.onChange(Number(e.target.value))
+                              }
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  ))}
+                </div>
+
+                <div className="flex justify-end gap-2 mt-4">
+                  <Button
+                    type="button"
+                    variant="destructive"
+                    onClick={reset}
+                    className="bg-red-500 hover:bg-red-600 text-white"
+                  >
+                    <Trash className="mr-2 h-4 w-4" />
+                    Eliminar
+                  </Button>
+                  <Button
+                    type="submit"
+                    className="bg-green-500 hover:bg-green-600 text-white"
+                  >
+                    <Save className="mr-2 h-4 w-4" />
+                    Guardar Resultados
+                  </Button>
                 </div>
               </form>
             </Form>
